@@ -3,7 +3,7 @@ import uuidv4 from "uuid/v4";
 
 class ElasticSearchStore {
   private es = new elasticsearch.Client({
-    host: "localhost:9200",
+    host: process.env.ES_HOST || "localhost:9200",
     log: "info",
   });
 
