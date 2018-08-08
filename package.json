@@ -1,0 +1,24 @@
+{
+  "name": "poe-bot",
+  "version": "1.0.0",
+  "description": "Search for items",
+  "main": "build/index.js",
+  "author": "ashwin",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/elasticsearch": "^5.0.25",
+    "nodemon": "^1.18.3",
+    "typescript": "^3.0.1"
+  },
+  "dependencies": {
+    "@types/uuid": "^3.4.3",
+    "axios": "^0.18.0",
+    "elasticsearch": "^15.1.1",
+    "uuid": "^3.3.2"
+  },
+  "scripts": {
+    "watch": "./node_modules/typescript/bin/tsc --watch",
+    "watch-build": "./node_modules/nodemon/bin/nodemon.js build/index.js",
+    "init-elasticsearch": "docker run -d -p 9200:9200 -p 9300:9300 -e \"discovery.type=single-node\" docker.elastic.co/elasticsearch/elasticsearch:6.3.2"
+  }
+}
