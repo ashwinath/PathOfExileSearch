@@ -8,12 +8,16 @@ interface Bot {
 
 class DiscordBot implements Bot {
   private client = new Discord.Client();
-  private HELP_MSG = `How to use: search <implicit/explicit/name/classname> <string to search>`;
+  private HELP_MSG = `
+How to use:
+search <implicit/explicit/name> <string to search>
+search <level> <classname (plural)> <number>
+  `;
   private FIELD_MAPPER = {
     "implicit": "implicitStatText",
     "explicit": "explicitStatText",
     "name": "name",
-    "class": "className",
+    "level": "requiredLevel",
   }
 
   constructor() {
@@ -59,14 +63,25 @@ class DiscordBot implements Bot {
 
   private async search(tokenised: string[]) {
     const searchField = this.FIELD_MAPPER[tokenised[0]]
+    tokenised.shift()
     if (!searchField) {
       return this.HELP_MSG;
     }
 
-    tokenised.unshift();
-    const searchContents = tokenised.join(" ");
     const size = searchField === "name" ? 5 : 20
-    const response = await elasticSearchStore.search(searchField, searchContents, size);
+    let response;
+    if (searchField === "requiredLevel") {
+      if (tokenised.length < 2) {
+        return this.HELP_MSG;
+      }
+      const className = tokenised[0];
+      const levelLimit = tokenised[1];
+
+      response = await elasticSearchStore.searchLevelRange(parseInt(levelLimit, 10), className, size);
+    } else {
+      const searchContents = tokenised.join(" ");
+      response = await elasticSearchStore.search(searchField, searchContents, size);
+    }
 
     if (response.success && response.result) {
       return this.marshalItemContent(response.result, searchField === "name");
@@ -95,7 +110,7 @@ Explicit: ${item.explicitStatText}
       return allItems.join("\n");
     }
     const itemNames = items.map((item) => {
-      return `- ${item.name}`
+      return `- ${item.name} - Level ${item.requiredLevel}`
     })
     return `
 RESULT:

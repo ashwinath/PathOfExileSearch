@@ -82,13 +82,13 @@ class MainIndexer implements Etl {
       baseItem: poeItem.title["base item"],
       implicitStatText: poeItem.title["implicit stat text"],
       explicitStatText: explicit,
-      dropLevel: poeItem.title["drop level"],
-      dropLevelMaximum: poeItem.title["drop level maximum"],
-      requiredDexterity: poeItem.title["required dexterity"],
-      requiredIntelligence: poeItem.title["required intelligence"],
-      requiredLevel: poeItem.title["required level"],
-      requiredLevelBase: poeItem.title["required level base"],
-      requiredStrength: poeItem.title["required strength"],
+      dropLevel: parseInt(poeItem.title["drop level"], 10),
+      dropLevelMaximum: parseInt(poeItem.title["drop level maximum"], 10),
+      requiredDexterity: parseInt(poeItem.title["required dexterity"], 10),
+      requiredIntelligence: parseInt(poeItem.title["required intelligence"], 10),
+      requiredLevel: parseInt(poeItem.title["required level"], 10),
+      requiredLevelBase: parseInt(poeItem.title["required level base"], 10),
+      requiredStrength: parseInt(poeItem.title["required strength"], 10),
     }
   }
 

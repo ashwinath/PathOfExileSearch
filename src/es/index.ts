@@ -8,6 +8,10 @@ class ElasticSearchStore {
     log: "info",
   });
 
+  private DEFAULT_SORT = [
+    { "requiredLevel": { "order": "desc" } },
+  ];
+
   public async store<T>(index: string, body: T) {
     try {
       await this.es.create({
@@ -31,6 +35,7 @@ class ElasticSearchStore {
           query: {
             match: matchBody,
           },
+          sort: this.DEFAULT_SORT,
         },
         size: size,
       });
@@ -46,6 +51,47 @@ class ElasticSearchStore {
         error: error.message,
       }
     }
+  }
+
+  public async searchLevelRange(
+    maxLevel: number, className: string, size: number): Promise<EsSearchResult> {
+    console.log(maxLevel)
+    console.log(className)
+    try {
+      const response = await this.es.search<EsPoeItem>({
+        index: "items",
+        body: {
+          query: {
+            bool: {
+              must: [
+                {
+                  range: {
+                    requiredLevel: {
+                      lte: maxLevel,
+                    },
+                  }
+                },
+                { term: { "className": className } },
+              ]
+            }
+          },
+          sort: this.DEFAULT_SORT,
+        },
+        size: size,
+      });
+
+      return {
+        success: true,
+        result: response.hits.hits.map((item) => item._source),
+      }
+    } catch (error) {
+      console.error(error.message);
+      return {
+        success: false,
+        error: error.message,
+      }
+    }
+
   }
 }
 
