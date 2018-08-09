@@ -1,4 +1,5 @@
 import axios from "axios";
+import striptags from "striptags";
 import elasticSearchStore from "../es";
 import { EsPoeItem } from "../interfaces";
 
@@ -72,12 +73,15 @@ class MainIndexer implements Etl {
   }
 
   private poeItemMapper(poeItem: PoeItemsTitle): EsPoeItem {
+    const explicitCleaned = poeItem.title["explicit stat text"]
+      .replace(/\&lt\;/g, "<").replace(/\&gt\;/g, ">");
+    const explicit = striptags(explicitCleaned, [], "\n");
     return {
       name: poeItem.title["name"],
       className: poeItem.title["class"],
       baseItem: poeItem.title["base item"],
       implicitStatText: poeItem.title["implicit stat text"],
-      explicitStatText: poeItem.title["explicit stat text"],
+      explicitStatText: explicit,
       dropLevel: poeItem.title["drop level"],
       dropLevelMaximum: poeItem.title["drop level maximum"],
       requiredDexterity: poeItem.title["required dexterity"],
