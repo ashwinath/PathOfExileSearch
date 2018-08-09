@@ -1,7 +1,13 @@
-import MainIndexer from "./etl"
+//import MainIndexer from "./etl"
+import DiscordBot from "./discord";
 
-// ETL
-const mainIndexer = new MainIndexer();
-mainIndexer.process()
+async function main() {
+  // ETL
+  //const mainIndexer = new MainIndexer();
+  //await mainIndexer.process();
 
-// TODO: Discord Bot
+  const discordBot = new DiscordBot();
+  discordBot.listen();
+}
+
+main();

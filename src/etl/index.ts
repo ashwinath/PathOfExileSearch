@@ -1,5 +1,6 @@
 import axios from "axios";
 import elasticSearchStore from "../es";
+import { EsPoeItem } from "../interfaces";
 
 interface Etl {
   process(): void; 
@@ -25,21 +26,6 @@ interface PoeItemsTitle {
   title: object; // a little clunky here since the api returns funny results
 }
 
-interface EsPoeItem {
-  name: string;
-  className: string;
-  baseItem: string;
-  implicitStatText: string;
-  explicitStatText: string;
-  dropLevel: number;
-  dropLevelMaximum: number;
-  requiredDexterity: number
-  requiredIntelligence: number;
-  requiredLevel: number;
-  requiredLevelBase: number;
-  requiredStrength: number;
-}
-
 class MainIndexer implements Etl {
   private WIKI_BASE_URL = "https://pathofexile.gamepedia.com/api.php";
   private PROJECTIONS = [
@@ -59,7 +45,7 @@ class MainIndexer implements Etl {
   ];
 
   public async process() {
-    let limit = 50;
+    let limit = 100;
     let offset = 0;
     for (;;) {
       console.log(`Downloading from offset=${offset}, limit=${limit}`)
