@@ -1,0 +1,1 @@
+ssh -o "StrictHostKeyChecking no" travis@ashwinchat.com -t "docker pull ashwinath/poe-search-bot && docker stop poe-search-bot && docker rm poe-search-bot && docker run --name poe-search-bot -e DISCORD_TOKEN=`${DISCORD_TOKEN}` -d ashwinath/poe-search-bot && docker image prune -f"

@@ -1,0 +1,21 @@
+language: node_js
+services:
+- docker
+node_js:
+- '10.7'
+after_success:
+- sh -c "docker build -t ashwinath/poe-search-bot $* ."
+- docker login -u="ashwinath" -p="$DOCKER_PASSWORD"
+- if [[ $TRAVIS_BRANCH = master ]]; then docker push ashwinath/personal-website-3:latest;
+  else true; fi
+- if [[ $TRAVIS_TAG = $TRAVIS_BRANCH ]]; then docker push ashwinath/personal-website-3:$TRAVIS_TAG;
+  else true ; fi
+- bash scripts/deploy.sh
+env:
+  global:
+    secure: EeJh+PhXsqWZxtLPTE5TUGi2WkxfpC+yv30qVhMAitEW4VMy2BxRX/Vw4UpX9KsHZjzHzMM7h9PfWTfHg+ZlBjU8NLWAOcuHBRGfWNFI6UZu1OFC1TgOIwb7sEFFPpvFy75qREbIfl1MpaFJwR5jZ+h1B59TMHHRmW1gB2mp84O+YLdXelg8yHgIkFE+gkhxYN2UCzGUyfkUKFMwBPXQubyISv9pi4+kM7/WMS15aXXe3Us68iOKxhdZBZXiZ8CQmTDSYlewOmvx+6PWw5BbvM5v0k6BJObFtAt8qIhXwJFKlBsZfZS9JuHkoT5Bvb3ZQ7Xqu10GkPE/bcZwlwJJK4fHtKRR2t7lhl6eajOTQeoyE3gJ4LNmGMSy2wnMAm2jHk+x39EnKEL1i/2ASWNu9JwId7KoOnVkluTBEJI989q7x/PFZTRMmXLfppc+KZEkwV6f0yBPt/rJV7J6N5uvAOkP35tjQ1Ahx2aHyFdGsOZNntQFv/UELqpGvQnVMKjNSKXEFqbyI2lt/MXfmhjFMOK5bvN2gfgRl7DfWS6jHiM13Tbpabc+MVbXftW8vIZBteNJ0AtnJPjaX3XVx6MbqoA8e/8NsgbKnbpXHfPjFW0Wy+MN9We/KrO8tXkHYcTX1nz7t5wPkwmWRLlNE1w4LeZUXqiXielMFWy11ErKRDs=
+before_install:
+- openssl aes-256-cbc -K $encrypted_a5d544b25f4c_key -iv $encrypted_a5d544b25f4c_iv -in travis_rsa.enc -out /tmp/travis_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 /tmp/travis_rsa
+- ssh-add /tmp/travis_rsa
