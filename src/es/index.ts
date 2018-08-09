@@ -33,7 +33,7 @@ class ElasticSearchStore {
         index: "items",
         body: {
           query: {
-            match: matchBody,
+            match_phrase: matchBody,
           },
           sort: this.DEFAULT_SORT,
         },
