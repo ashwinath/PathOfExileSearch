@@ -27,8 +27,23 @@ interface EsSearchResult {
   error?: string;
 }
 
+interface BaseResponse {
+  success: boolean;
+}
+
+interface FormResponse extends BaseResponse {
+  classNames: string[];
+  baseItems: string[];
+}
+
+interface SearchResponse extends BaseResponse {
+  data: EsPoeItem[];
+}
+
 export {
   EsPoeItem,
   EsSearchResult,
   SearchItemRequest,
+  FormResponse,
+  SearchResponse,
 };

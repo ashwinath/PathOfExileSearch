@@ -1,6 +1,6 @@
 import * as Restify from "restify";
 import elasticSearchStore from "../es";
-import { SearchItemRequest } from "../interfaces"
+import { SearchItemRequest, FormResponse, SearchResponse } from "../interfaces"
 
 const server = Restify.createServer({
   name: "poe-search-server",
@@ -11,18 +11,23 @@ server.use(Restify.plugins.acceptParser(server.acceptable));
 server.use(Restify.plugins.queryParser());
 server.use(Restify.plugins.bodyParser());
 
+let formCache: FormResponse = { success: false, classNames: [], baseItems: []};
+
 async function formHandler(
   request: Restify.Request,
   response: Restify.Response,
   next: Restify.Next
 ) {
-
-  const classNames = await elasticSearchStore.searchDistinctFields("items", "className");
-  const baseItems = await elasticSearchStore.searchDistinctFields("items", "baseItem");
-  response.send({
-    classNames,
-    baseItems,
-  });
+  if (!formCache.success) {
+    const classNames = await elasticSearchStore.searchDistinctFields("items", "className");
+    const baseItems = await elasticSearchStore.searchDistinctFields("items", "baseItem");
+    formCache = {
+      success: true,
+      classNames,
+      baseItems,
+    }
+  }
+  response.send(formCache);
   return next();
 }
 
@@ -34,18 +39,12 @@ async function searchHandler(
   const body: SearchItemRequest = request.body;
 
   const esResponse = await elasticSearchStore.searchItem(body);
-  if (esResponse.success) {
-    response.send({
-      success: true,
-      data: esResponse.result,
-    });
-  } else {
-    response.send(500, {
-      success: false,
-      data: [],
-    });
 
+  const searchResponse: SearchResponse = {
+    success: esResponse.success,
+    data: esResponse.result
   }
+  response.send(esResponse.success ? 200 : 500, searchResponse);
   return next();
 }
 
