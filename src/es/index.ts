@@ -1,6 +1,10 @@
 import * as elasticsearch from "elasticsearch";
 import uuidv4 from "uuid/v4";
-import { EsPoeItem, EsSearchResult } from "../interfaces";
+import {
+  EsPoeItem,
+  EsSearchResult,
+  SearchItemRequest
+} from "../interfaces";
 
 class ElasticSearchStore {
   private es = new elasticsearch.Client({
@@ -84,6 +88,7 @@ class ElasticSearchStore {
       console.error(error.message);
       return {
         success: false,
+        result: [],
         error: error.message,
       }
     }
@@ -91,8 +96,6 @@ class ElasticSearchStore {
 
   public async searchLevelRange(
     maxLevel: number, className: string, size: number): Promise<EsSearchResult> {
-    console.log(maxLevel)
-    console.log(className)
     try {
       const response = await this.es.search<EsPoeItem>({
         index: "items",
@@ -124,6 +127,7 @@ class ElasticSearchStore {
       console.error(error.message);
       return {
         success: false,
+        result: [],
         error: error.message,
       }
     }
@@ -152,7 +156,69 @@ class ElasticSearchStore {
     } catch(error) {
       console.error(error.message)
     }
+  }
 
+  public async searchItem(request: SearchItemRequest): Promise<EsSearchResult> {
+    try {
+      const response = await this.es.search<EsPoeItem>({
+        index: "items",
+        type: "document",
+        body: {
+          size: 50,
+          query: {
+            bool: {
+              must: this.mapToTerms(request)
+            }
+          }
+        }
+      });
+      return {
+        success: true,
+        result: response.hits.hits.map((item) => item._source),
+      }
+    } catch (error) {
+      console.error(error.message)
+      return {
+        success: false,
+        result: [],
+        error: error.message,
+      }
+    }
+  }
+
+  private mapToTerms(request: SearchItemRequest) {
+    const allowedTerms = [
+      "className",
+      "baseItem",
+      "implicitStatText",
+      "explicitStatText",
+      "requiredLevel",
+    ];
+
+    const intermediate: any[] = [] ;
+    for (let key in request) {
+      if (!allowedTerms.includes(key)) {
+        continue;
+      }
+
+      const value = request[key];
+      const currentTerm = {};
+
+      if (key === "requiredLevel") {
+        currentTerm[key] = {
+          lte: value,
+        }
+        if (value) {
+          intermediate.push({ range: currentTerm });
+        }
+      } else {
+        currentTerm[key] = value;
+        if (value) {
+          intermediate.push({ term: currentTerm });
+        }
+      }
+    }
+    return intermediate;
   }
 }
 

@@ -1,3 +1,11 @@
+interface SearchItemRequest {
+  className?: string;
+  baseItem?: string;
+  implicitStatText?: string;
+  explicitStatText?: string;
+  requiredLevel?: number;
+}
+
 interface EsPoeItem {
   name: string;
   className: string;
@@ -15,8 +23,12 @@ interface EsPoeItem {
 
 interface EsSearchResult {
   success: boolean;
-  result?: EsPoeItem[];
+  result: EsPoeItem[];
   error?: string;
 }
 
-export { EsPoeItem, EsSearchResult };
+export {
+  EsPoeItem,
+  EsSearchResult,
+  SearchItemRequest,
+};
