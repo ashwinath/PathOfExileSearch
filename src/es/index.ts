@@ -214,10 +214,15 @@ class ElasticSearchStore {
         if (value) {
           intermediate.push({ range: currentTerm });
         }
-      } else {
+      } else if (key === "className" || key === "baseItem") {
         currentTerm[key] = value;
         if (value) {
           intermediate.push({ term: currentTerm });
+        }
+      } else {
+        currentTerm[key] = value;
+        if (value) {
+          intermediate.push({ match: currentTerm });
         }
       }
     }
