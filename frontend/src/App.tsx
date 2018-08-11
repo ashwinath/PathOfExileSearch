@@ -1,20 +1,39 @@
 import * as React from "react";
 import SearchForm from "./Components/SearchForm";
-import { PoeItem } from "./Interfaces";
+import { PoeItem, MainState } from "./Interfaces";
+import SearchItemsResults from "./Components/SearchItemsResults";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 
-class App extends React.Component {
-  public onSearchFormChange(poeItems: PoeItem[]) {
-    // TODO: implement this
-    console.log(JSON.stringify(poeItems));
+class App extends React.Component<{}, MainState> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      poeItems: [],
+    }
+
+    this.onSearchFormChange = this.onSearchFormChange.bind(this);
   }
 
   public render() {
     return (
-      <SearchForm onSearchFormChange={this.onSearchFormChange}/>
+      <div>
+        <SearchForm onSearchFormChange={this.onSearchFormChange}/>
+        <SearchItemsResults poeItems={this.state.poeItems}/>
+      </div>
     );
   }
+
+  private onSearchFormChange(poeItems: PoeItem[]) {
+    this.setState(() => {
+      return {
+        ...this.state,
+        poeItems,
+      };
+    });
+  }
+
 }
 
 export default App;

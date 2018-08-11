@@ -41,6 +41,18 @@ interface SearchFormProps {
   onSearchFormChange: ((poeItems: PoeItem[]) => void);
 }
 
+interface MainState {
+  poeItems: PoeItem[];
+}
+
+interface SearchItemsResultsProps {
+  poeItems: PoeItem[];
+}
+
+interface SearchResultsState {
+  poeItems: PoeItem[];
+}
+
 export {
   SearchState,
   UserInput,
@@ -48,4 +60,7 @@ export {
   PoeItem,
   SearchItemResult,
   SearchFormProps,
+  MainState,
+  SearchItemsResultsProps,
+  SearchResultsState,
 };

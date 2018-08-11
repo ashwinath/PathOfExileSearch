@@ -1,5 +1,6 @@
 import * as elasticsearch from "elasticsearch";
 import uuidv4 from "uuid/v4";
+import logger from "../logger";
 import {
   EsPoeItem,
   EsSearchResult,
@@ -48,7 +49,7 @@ class ElasticSearchStore {
         body: mapping,
       });
     } catch(error) {
-      console.error(error.message);
+      logger.error(error.message);
     }
   }
 
@@ -61,7 +62,7 @@ class ElasticSearchStore {
         id: uuidv4(),
       });
     } catch (error) {
-      console.error(error.message);
+      logger.error(error.message);
     }
   }
 
@@ -85,7 +86,7 @@ class ElasticSearchStore {
         result: response.hits.hits.map((item) => item._source),
       }
     } catch (error) {
-      console.error(error.message);
+      logger.error(error.message);
       return {
         success: false,
         result: [],
@@ -124,7 +125,7 @@ class ElasticSearchStore {
         result: response.hits.hits.map((item) => item._source),
       }
     } catch (error) {
-      console.error(error.message);
+      logger.error(error.message);
       return {
         success: false,
         result: [],
@@ -154,7 +155,7 @@ class ElasticSearchStore {
       });
       return response.aggregations.aggregations.buckets.map((item) => item.key).filter((item) => item.key !== "")
     } catch(error) {
-      console.error(error.message)
+      logger.error(error.message)
     }
   }
 
@@ -177,7 +178,7 @@ class ElasticSearchStore {
         result: response.hits.hits.map((item) => item._source),
       }
     } catch (error) {
-      console.error(error.message)
+      logger.error(error.message)
       return {
         success: false,
         result: [],
@@ -206,7 +207,7 @@ class ElasticSearchStore {
 
       if (key === "requiredLevel") {
         currentTerm[key] = {
-          lte: value,
+          gte: value,
         }
         if (value) {
           intermediate.push({ range: currentTerm });
