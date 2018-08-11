@@ -6,28 +6,15 @@ import {
   Label,
   Input,
 } from "reactstrap";
+import {
+  SearchState,
+  FormData,
+  SearchFormProps,
+  SearchItemResult,
+} from "../Interfaces";
 import "./SearchForm.css"
 
-interface SearchState {
-  data: FormData
-  selectedClassName: string;
-  userInput: UserInput;
-}
-
-interface UserInput {
-  className: string;
-  baseItem: string;
-  implicitStatText: string;
-  explicitStatText: string;
-  requiredLevel: string;
-}
-
-interface FormData {
-  classNames: string[];
-  baseItems: string[];
-}
-
-class SearchForm extends React.Component<{}, SearchState> {
+class SearchForm extends React.Component<SearchFormProps, SearchState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,7 +36,17 @@ class SearchForm extends React.Component<{}, SearchState> {
   }
 
   public async search() {
-    console.log("still searching...")
+    try {
+      const postBody = {
+        ...this.state.userInput,
+        requiredLevel: parseInt(this.state.userInput.requiredLevel, 10),
+      }
+      const response = await axios.post<SearchItemResult>("/-/items/search", postBody);
+      const result = response.data.data;
+      this.props.onSearchFormChange(result);
+    } catch (error) {
+      this.props.onSearchFormChange([]);
+    }
   }
 
   public async componentDidMount() {

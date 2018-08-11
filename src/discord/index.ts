@@ -1,5 +1,6 @@
 import Discord from "discord.js";
 import elasticSearchStore from "../es";
+import logger from "../logger";
 import { EsPoeItem } from "../interfaces";
 
 interface Bot {
@@ -31,7 +32,7 @@ search <level> <classname (plural)> <number>
   }
 
   private initBot() {
-    this.client.on("ready", () => console.log("Discord ready to serve!"));
+    this.client.on("ready", () => logger.info("Discord ready to serve!"));
     this.client.login(process.env.DISCORD_TOKEN);
   }
 

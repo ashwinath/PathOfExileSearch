@@ -1,5 +1,7 @@
 import * as Restify from "restify";
+import * as Path from "path";
 import elasticSearchStore from "../es";
+import logger from "../logger";
 import { SearchItemRequest, FormResponse, SearchResponse } from "../interfaces"
 
 const server = Restify.createServer({
@@ -7,6 +9,10 @@ const server = Restify.createServer({
   version: '1.0.0'
 });
 
+server.on('after', Restify.plugins.auditLogger({
+  log: logger,
+  event: "after",
+}));
 server.use(Restify.plugins.acceptParser(server.acceptable));
 server.use(Restify.plugins.queryParser());
 server.use(Restify.plugins.bodyParser());
@@ -51,5 +57,9 @@ async function searchHandler(
 // Routes
 server.get("/-/form", formHandler)
 server.post("/-/items/search", searchHandler)
+server.get('/*', Restify.plugins.serveStatic({
+  directory: Path.join(__dirname, "public"),
+  default: 'index.html',
+}));
 
 export default server;
