@@ -58,7 +58,7 @@ async function searchHandler(
 server.get("/-/form", formHandler)
 server.post("/-/items/search", searchHandler)
 server.get('/*', Restify.plugins.serveStatic({
-  directory: Path.join(__dirname, "public"),
+  directory: Path.join(__dirname, "../public"),
   default: 'index.html',
 }));
 
