@@ -152,7 +152,7 @@ class ElasticSearchStore {
           },
         },
       });
-      return response.aggregations.aggregations.buckets.map((item) => item.key)
+      return response.aggregations.aggregations.buckets.map((item) => item.key).filter((item) => item.key !== "")
     } catch(error) {
       console.error(error.message)
     }
