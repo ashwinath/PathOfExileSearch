@@ -46,6 +46,8 @@ class MainIndexer implements Etl {
   ];
 
   public async process() {
+    await elasticSearchStore.sendItemMapping();
+
     let limit = 100;
     let offset = 0;
     for (;;) {

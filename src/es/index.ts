@@ -12,6 +12,42 @@ class ElasticSearchStore {
     { "requiredLevel": { "order": "desc" } },
   ];
 
+  public async sendItemMapping() {
+    try {
+      await this.es.indices.create({
+        index: "items",
+      });
+
+      const mapping = {
+        "properties": {
+          "name": { "type": "text" },
+          "className": {
+            "type": "keyword",
+          },
+          "baseItem": {
+            "type": "keyword",
+          },
+          "implicitStatText": { "type": "text" },
+          "explicitStatText": { "type": "text" },
+          "dropLevel": { "type": "integer" },
+          "dropLevelMaximum": { "type": "integer" },
+          "requiredDexterity": { "type": "integer" },
+          "requiredIntelligence": { "type": "integer" },
+          "requiredLevel": { "type": "integer" },
+          "requiredLevelBase": { "type": "integer" },
+          "requiredStrength": { "type": "integer" },
+        }
+      }
+      await this.es.indices.putMapping({
+        index: "items",
+        type: "document",
+        body: mapping,
+      });
+    } catch(error) {
+      console.error(error.message);
+    }
+  }
+
   public async store<T>(index: string, body: T) {
     try {
       await this.es.create({
@@ -90,6 +126,31 @@ class ElasticSearchStore {
         success: false,
         error: error.message,
       }
+    }
+  }
+
+  // This returns a list of strings. the typing is not good for this
+  public async searchDistinctFields(index: string, field: string) {
+    try {
+      const response = await this.es.search({
+        index,
+        type: "document",
+        body: {
+          size: 0,
+          aggs: {
+            aggregations: {
+              terms: {
+                field,
+                size: 99999,
+                order: { "_term": "asc" }
+              },
+            }
+          },
+        },
+      });
+      return response.aggregations.aggregations.buckets.map((item) => item.key)
+    } catch(error) {
+      console.error(error.message)
     }
 
   }

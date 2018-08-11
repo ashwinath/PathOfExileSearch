@@ -6,4 +6,6 @@ COPY package*.json ./
 RUN yarn
 COPY build ./build
 
+EXPOSE 7000
+
 CMD ["yarn", "run-prod"]
