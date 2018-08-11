@@ -24,6 +24,7 @@ class SearchForm extends React.Component<SearchFormProps, SearchState> {
       },
       selectedClassName: "",
       userInput: {
+        name: "",
         className: "",
         baseItem: "",
         implicitStatText: "",
@@ -64,6 +65,15 @@ class SearchForm extends React.Component<SearchFormProps, SearchState> {
         <Container>
           <h1>Path Of Exile Search</h1>
           <div>
+            <Label className="form-label-search">Name</Label>
+            <Input type="text"
+              name="search-name"
+              id="search-name"
+              onChange={this.onUserInputChange.bind(this, "name")}
+              value={this.state.userInput.name}/>
+          </div>
+
+          <div>
             <Label className="form-label-search">Base Class</Label>
             <Autocomplete
               inputProps={{ placeholder: "Class" }}
@@ -102,8 +112,8 @@ class SearchForm extends React.Component<SearchFormProps, SearchState> {
           <div>
             <Label className="form-label-search">Implicit Mod</Label>
             <Input type="text"
-              name="search-level"
-              id="search-level"
+              name="search-implicit"
+              id="search-implicit"
               onChange={this.onUserInputChange.bind(this, "implicitStatText")}
               value={this.state.userInput.implicitStatText}/>
           </div>
@@ -111,8 +121,8 @@ class SearchForm extends React.Component<SearchFormProps, SearchState> {
           <div>
             <Label className="form-label-search">Explicit Mod</Label>
             <Input type="text"
-              name="search-level"
-              id="search-level"
+              name="search-explicit"
+              id="search-explicit"
               onChange={this.onUserInputChange.bind(this, "explicitStatText")}
               value={this.state.userInput.explicitStatText}/>
           </div>

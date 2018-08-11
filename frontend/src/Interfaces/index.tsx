@@ -5,6 +5,7 @@ interface SearchState {
 }
 
 interface UserInput {
+  name: string;
   className: string;
   baseItem: string;
   implicitStatText: string;

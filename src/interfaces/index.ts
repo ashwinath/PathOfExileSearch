@@ -1,4 +1,5 @@
 interface SearchItemRequest {
+  name?: string;
   className?: string;
   baseItem?: string;
   implicitStatText?: string;

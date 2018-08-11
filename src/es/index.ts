@@ -189,6 +189,7 @@ class ElasticSearchStore {
 
   private mapToTerms(request: SearchItemRequest) {
     const allowedTerms = [
+      "name",
       "className",
       "baseItem",
       "implicitStatText",
@@ -199,6 +200,7 @@ class ElasticSearchStore {
     const intermediate: any[] = [] ;
     for (let key in request) {
       if (!allowedTerms.includes(key)) {
+        logger.info("here")
         continue;
       }
 
