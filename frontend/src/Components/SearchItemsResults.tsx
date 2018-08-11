@@ -53,8 +53,7 @@ function PoeItem({ item }: { item: PoeItem }) {
         {item.requiredStrength ? <h6>Required Strength: {item.requiredStrength}</h6>: null}
         {item.requiredDexterity ? <h6>Required Dexterity: {item.requiredDexterity}</h6>: null}
         {item.requiredIntelligence ? <h6>Required Intelligence: {item.requiredIntelligence}</h6>: null}
-        {item.implicitStatText ? <h6>{item.implicitStatText}</h6>: null}
-        {item.explicitStatText ? <h6>{item.explicitStatText}</h6>: null}
+        {item.mods.map((mod) => <h6 key={name+mod}>{mod}</h6>)}
       </Col>
     </Row>
   );

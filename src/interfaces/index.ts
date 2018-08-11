@@ -11,8 +11,6 @@ interface EsPoeItem {
   name: string;
   className: string;
   baseItem: string;
-  implicitStatText: string;
-  explicitStatText: string;
   dropLevel: number;
   dropLevelMaximum: number;
   requiredDexterity: number
@@ -20,6 +18,8 @@ interface EsPoeItem {
   requiredLevel: number;
   requiredLevelBase: number;
   requiredStrength: number;
+  mods: string[];
+  id: string;
 }
 
 interface EsSearchResult {

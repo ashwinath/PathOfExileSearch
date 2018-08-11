@@ -1,5 +1,4 @@
 import * as elasticsearch from "elasticsearch";
-import uuidv4 from "uuid/v4";
 import logger from "../logger";
 import {
   EsPoeItem,
@@ -32,8 +31,7 @@ class ElasticSearchStore {
           "baseItem": {
             "type": "keyword",
           },
-          "implicitStatText": { "type": "text" },
-          "explicitStatText": { "type": "text" },
+          "mods": { "type": "text" },
           "dropLevel": { "type": "integer" },
           "dropLevelMaximum": { "type": "integer" },
           "requiredDexterity": { "type": "integer" },
@@ -53,13 +51,13 @@ class ElasticSearchStore {
     }
   }
 
-  public async store<T>(index: string, body: T) {
+  public async store<T>(index: string, body: T, id: string) {
     try {
-      await this.es.create({
+      await this.es.index({
         index: index,
         type: "document",
         body: body,
-        id: uuidv4(),
+        id: id,
       });
     } catch (error) {
       logger.error(error.message);
@@ -192,8 +190,7 @@ class ElasticSearchStore {
       "name",
       "className",
       "baseItem",
-      "implicitStatText",
-      "explicitStatText",
+      "mods",
       "requiredLevel",
     ];
 

@@ -1,6 +1,6 @@
 import axios from "axios";
-import striptags from "striptags";
 import elasticSearchStore from "../es";
+import logger from "../logger";
 import { EsPoeItem } from "../interfaces";
 
 interface Etl {
@@ -33,8 +33,6 @@ class MainIndexer implements Etl {
     "name",
     "class",
     "base_item",
-    "implicit_stat_text",
-    "explicit_stat_text",
     "drop_level",
     "drop_level_maximum",
     "required_dexterity",
@@ -43,7 +41,13 @@ class MainIndexer implements Etl {
     "required_level_base",
     "required_strength",
     "base_item",
+    "mods",
   ];
+
+  constructor() {
+    this.poeItemMapper = this.poeItemMapper.bind(this);
+    this.mapAndDownloadExtraStats = this.mapAndDownloadExtraStats.bind(this);
+  }
 
   public async process() {
     await elasticSearchStore.sendItemMapping();
@@ -51,7 +55,7 @@ class MainIndexer implements Etl {
     let limit = 100;
     let offset = 0;
     for (;;) {
-      console.log(`Downloading from offset=${offset}, limit=${limit}`)
+      logger.info(`Downloading from offset=${offset}, limit=${limit}`)
       const response = await axios.get<PoeWikiResponse>(this.WIKI_BASE_URL, {
         params: this.constructParams(limit, offset)
       });
@@ -65,25 +69,47 @@ class MainIndexer implements Etl {
         break;
       }
 
-      console.log(`Persisting into ElasticSearch from offset=${offset}, limit=${limit}`)
-      const allMarshalledItems = cargoquery.map(this.poeItemMapper);
-      allMarshalledItems.forEach(item => elasticSearchStore.store("items", item));
+      logger.info(`Persisting into ElasticSearch from offset=${offset}, limit=${limit}`)
+      await Promise.all(cargoquery.map(this.mapAndDownloadExtraStats))
 
       offset += limit;
-      console.log(`Done, offset=${offset}, limit=${limit}`)
+      logger.info(`Done, offset=${offset}, limit=${limit}`)
     }
   }
 
-  private poeItemMapper(poeItem: PoeItemsTitle): EsPoeItem {
-    const explicitCleaned = poeItem.title["explicit stat text"]
-      .replace(/\&lt\;/g, "<").replace(/\&gt\;/g, ">");
-    const explicit = striptags(explicitCleaned, [], "\n");
+  private async mapAndDownloadExtraStats(poeItem: PoeItemsTitle) {
+    const marshalledItem = await this.poeItemMapper(poeItem);
+    await elasticSearchStore.store("items", marshalledItem, marshalledItem.name);
+  }
+
+  private async poeItemMapper(poeItem: PoeItemsTitle): Promise<EsPoeItem> {
+    const mods = poeItem.title["mods"].split(",").map((x) => x.trim())
+    const modTexts: string[] = []
+    for (let i = 0; i < mods.length; ++i) {
+      const mod = mods[i]
+      if (!mod) {
+        continue;
+      }
+      try {
+        const modResponse = await axios.get<PoeWikiResponse>(this.WIKI_BASE_URL, {
+          params: {
+            action: "cargoquery",
+            tables: "mods",
+            format: "json",
+            fields: "stat_text",
+            where: `id="${mod}"`,
+          }
+        });
+        const modText = modResponse.data.cargoquery[0]["title"]["stat text"];
+        modTexts.push(modText)
+      } catch (error) {
+        console.log(error)
+      }
+    }
     return {
       name: poeItem.title["name"],
       className: poeItem.title["class"],
       baseItem: poeItem.title["base item"],
-      implicitStatText: poeItem.title["implicit stat text"],
-      explicitStatText: explicit,
       dropLevel: parseInt(poeItem.title["drop level"], 10),
       dropLevelMaximum: parseInt(poeItem.title["drop level maximum"], 10),
       requiredDexterity: parseInt(poeItem.title["required dexterity"], 10),
@@ -91,6 +117,8 @@ class MainIndexer implements Etl {
       requiredLevel: parseInt(poeItem.title["required level"], 10),
       requiredLevelBase: parseInt(poeItem.title["required level base"], 10),
       requiredStrength: parseInt(poeItem.title["required strength"], 10),
+      mods: modTexts,
+      id: poeItem.title["id"],
     }
   }
 

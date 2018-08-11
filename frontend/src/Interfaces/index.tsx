@@ -8,8 +8,7 @@ interface UserInput {
   name: string;
   className: string;
   baseItem: string;
-  implicitStatText: string;
-  explicitStatText: string;
+  mods: string;
   requiredLevel: string;
 }
 
@@ -22,8 +21,7 @@ interface PoeItem {
   name: string;
   className: string;
   baseItem: string;
-  implicitStatText: string;
-  explicitStatText: string;
+  mods: string[];
   dropLevel: number;
   dropLevelMaximum: number;
   requiredDexterity: number

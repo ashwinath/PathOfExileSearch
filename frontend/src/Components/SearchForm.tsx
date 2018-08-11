@@ -27,8 +27,7 @@ class SearchForm extends React.Component<SearchFormProps, SearchState> {
         name: "",
         className: "",
         baseItem: "",
-        implicitStatText: "",
-        explicitStatText: "",
+        mods: "",
         requiredLevel: "",
       }
     }
@@ -101,30 +100,12 @@ class SearchForm extends React.Component<SearchFormProps, SearchState> {
           </div>
 
           <div>
-            <Label className="form-label-search">Required Level</Label>
+            <Label className="form-label-search">Mods</Label>
             <Input type="text"
-              name="search-level"
-              id="search-level"
-              onChange={this.onUserInputChange.bind(this, "requiredLevel")}
-              value={this.state.userInput.requiredLevel}/>
-          </div>
-
-          <div>
-            <Label className="form-label-search">Implicit Mod</Label>
-            <Input type="text"
-              name="search-implicit"
-              id="search-implicit"
-              onChange={this.onUserInputChange.bind(this, "implicitStatText")}
-              value={this.state.userInput.implicitStatText}/>
-          </div>
-
-          <div>
-            <Label className="form-label-search">Explicit Mod</Label>
-            <Input type="text"
-              name="search-explicit"
-              id="search-explicit"
-              onChange={this.onUserInputChange.bind(this, "explicitStatText")}
-              value={this.state.userInput.explicitStatText}/>
+              name="search-mods"
+              id="search-mods"
+              onChange={this.onUserInputChange.bind(this, "mods")}
+              value={this.state.userInput.mods}/>
           </div>
         </Container>
       );

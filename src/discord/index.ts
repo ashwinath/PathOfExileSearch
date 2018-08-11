@@ -15,8 +15,6 @@ search <implicit/explicit/name> <string to search>
 search <level> <classname (plural)> <number>
   `;
   private FIELD_MAPPER = {
-    "implicit": "implicitStatText",
-    "explicit": "explicitStatText",
     "name": "name",
     "level": "requiredLevel",
   }
@@ -104,8 +102,6 @@ Level: ${item.requiredLevel}
 Strength: ${item.requiredStrength}
 Dexterity: ${item.requiredDexterity}
 Intelligence: ${item.requiredIntelligence}
-Implicit: ${item.implicitStatText}
-Explicit: ${item.explicitStatText}
         `
       });
       return allItems.join("\n");
