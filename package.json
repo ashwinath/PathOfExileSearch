@@ -7,19 +7,16 @@
   "license": "MIT",
   "devDependencies": {
     "@types/elasticsearch": "^5.0.25",
-    "@types/striptags": "^3.1.1",
     "@types/uuid": "^3.4.3",
+    "@types/restify": "^7.2.3",
     "nodemon": "^1.18.3",
     "typescript": "^3.0.1"
   },
   "dependencies": {
-    "@types/restify": "^7.2.3",
     "axios": "^0.18.0",
     "discord.js": "^11.3.2",
     "elasticsearch": "^15.1.1",
-    "restify": "^7.2.1",
-    "striptags": "^3.1.1",
-    "uuid": "^3.3.2"
+    "restify": "^7.2.1"
   },
   "scripts": {
     "watch": "./node_modules/typescript/bin/tsc --watch",
