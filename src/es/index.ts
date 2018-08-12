@@ -31,7 +31,10 @@ class ElasticSearchStore {
           "baseItem": {
             "type": "keyword",
           },
-          "mods": { "type": "text" },
+          "mods": {
+            "type": "text",
+            "position_increment_gap": 100,
+          },
           "dropLevel": { "type": "integer" },
           "dropLevelMaximum": { "type": "integer" },
           "requiredDexterity": { "type": "integer" },
