@@ -219,6 +219,11 @@ class ElasticSearchStore {
         if (value) {
           intermediate.push({ term: currentTerm });
         }
+      } else if (key === "name") {
+        currentTerm[key] = value;
+        if (value) {
+          intermediate.push({ match_phrase_prefix: currentTerm });
+        }
       } else {
         currentTerm[key] = value;
         if (value) {
