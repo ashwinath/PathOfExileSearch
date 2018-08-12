@@ -5,7 +5,7 @@ const env = process.env.ENV || "DEV";
 const prodStreams: Bunyan.Stream[] = [
   {
     level: "info",
-    path: "/var/log/website/log.txt",
+    path: "/var/log/poe-search/log.txt",
   }
 ];
 
