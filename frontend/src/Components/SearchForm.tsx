@@ -64,15 +64,6 @@ class SearchForm extends React.Component<SearchFormProps, SearchState> {
         <Container>
           <h1>Path Of Exile Search</h1>
           <div>
-            <Label className="form-label-search">Name</Label>
-            <Input type="text"
-              name="search-name"
-              id="search-name"
-              onChange={this.onUserInputChange.bind(this, "name")}
-              value={this.state.userInput.name}/>
-          </div>
-
-          <div>
             <Label className="form-label-search">Base Class</Label>
             <Autocomplete
               inputProps={{ placeholder: "Class" }}
@@ -97,6 +88,15 @@ class SearchForm extends React.Component<SearchFormProps, SearchState> {
               onChange={this.onUserInputChange.bind(this, "baseItem")}
               onSelect={this.onAutoCompleteSelect.bind(this, "baseItem")}
             />
+          </div>
+
+          <div>
+            <Label className="form-label-search">Name</Label>
+            <Input type="text"
+              name="search-name"
+              id="search-name"
+              onChange={this.onUserInputChange.bind(this, "name")}
+              value={this.state.userInput.name}/>
           </div>
 
           <div>
