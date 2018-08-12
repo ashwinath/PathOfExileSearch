@@ -57,24 +57,25 @@ class MainIndexer implements Etl {
     for (;;) {
       logger.info(`Downloading from offset=${offset}, limit=${limit}`)
       const response = await axios.get<PoeWikiResponse>(this.WIKI_BASE_URL, {
-        params: this.constructParams(limit, offset)
+        params: this.constructParams(limit, offset),
       });
 
       if (response.status !== 200) {
         break;
       }
 
-      const { cargoquery } = response.data
+      const { cargoquery } = response.data;
       if (cargoquery.length === 0) {
         break;
       }
 
-      logger.info(`Persisting into ElasticSearch from offset=${offset}, limit=${limit}`)
-      await Promise.all(cargoquery.map(this.mapAndDownloadExtraStats))
+      logger.info(`Persisting into ElasticSearch from offset=${offset}, limit=${limit}`);
+      await Promise.all(cargoquery.map(this.mapAndDownloadExtraStats));
 
       offset += limit;
-      logger.info(`Done, offset=${offset}, limit=${limit}`)
+      logger.info(`Done, offset=${offset}, limit=${limit}`);
     }
+    logger.info(`Finished indexing all items in POE.`);
   }
 
   private async mapAndDownloadExtraStats(poeItem: PoeItemsTitle) {
@@ -100,7 +101,17 @@ class MainIndexer implements Etl {
             where: `id="${mod}"`,
           }
         });
-        const modText = modResponse.data.cargoquery[0]["title"]["stat text"];
+        let modText = modResponse.data.cargoquery[0]["title"]["stat text"];
+
+        // Find all [[]] stuff like [[Chaos Damage]] or separated by pipes [[Item Socket|Sockets]]
+        // Take the right side of the pipe
+        const matches = modText.match(/\[\[[^\]]*\]\]/g) || [];
+        matches.forEach((match) => {
+          let split = match.replace("[[", "").replace("]]", "").split("|");
+          let sanitisedOutput = split[split.length - 1]; // take the last element.
+          modText = modText.replace(match, sanitisedOutput);
+        });
+
         modTexts.push(modText)
       } catch (error) {
         console.log(error)
@@ -119,7 +130,7 @@ class MainIndexer implements Etl {
       requiredStrength: parseInt(poeItem.title["required strength"], 10),
       mods: modTexts,
       id: poeItem.title["id"],
-    }
+    };
   }
 
   private constructParams(limit: number, offset: number): PoeWikiParams {
