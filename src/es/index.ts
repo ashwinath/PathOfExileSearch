@@ -173,7 +173,7 @@ class ElasticSearchStore {
         index: "items",
         type: "document",
         body: {
-          size: 50,
+          size: 10,
           query: {
             bool: {
               must: this.mapToTerms(request)
