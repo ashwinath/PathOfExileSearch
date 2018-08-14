@@ -29,6 +29,19 @@ interface PoeItem {
   requiredLevel: number;
   requiredLevelBase: number;
   requiredStrength: number;
+  poeNinja?: ServerPoeNinjaResponse;
+}
+
+interface ServerPoeNinjaResponse {
+  chaosValue?: string;
+  exaltedValue?: string;
+  imageUrl: string;
+  name: string;
+  sparkLine?: number[];
+  receive?: number;
+  receiveSparkLine?: number[];
+  pay?: number;
+  paySparkLine?: number[];
 }
 
 interface SearchItemResult {

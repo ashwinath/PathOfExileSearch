@@ -37,13 +37,19 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
 }
 
 function PoeItem({ item }: { item: PoeItem }) {
+  const poeNinja = item.poeNinja;
+  let imageUrl = "https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/c/cb/Einhar_Frey.png?version=341fd75b8f2079262d01ff4fee54c591";
+  if (poeNinja) {
+    imageUrl = poeNinja.imageUrl;
+  }
+  console.log(imageUrl)
   return (
     <Row>
       <Col md="2" xs="4">
         <CardImg
           top={true}
           width="100%"
-          src="https://d1u5p3l4wpay3k.cloudfront.net/pathofexile_gamepedia/c/c5/Kaom%27s_Heart_inventory_icon.png?version=8bd1b9451f5ffb18de07c74a5195fb85"/>
+          src={imageUrl}/>
       </Col>
       <Col>
         <h3>{item.name}</h3>

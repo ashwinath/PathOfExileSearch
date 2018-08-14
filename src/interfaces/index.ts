@@ -20,6 +20,19 @@ interface EsPoeItem {
   requiredStrength: number;
   mods: string[];
   id: string;
+  poeNinja?: ServerPoeNinjaResponse;
+}
+
+interface ServerPoeNinjaResponse {
+  chaosValue?: string;
+  exaltedValue?: string;
+  imageUrl: string;
+  name: string;
+  sparkLine?: number[];
+  receive?: number;
+  receiveSparkLine?: number[];
+  pay?: number;
+  paySparkLine?: number[];
 }
 
 interface EsSearchResult {
