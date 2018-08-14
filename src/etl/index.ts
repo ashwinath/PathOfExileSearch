@@ -3,7 +3,7 @@ import elasticSearchStore from "../es";
 import logger from "../logger";
 import { EsPoeItem } from "../interfaces";
 
-interface Etl {
+export interface Etl {
   process(): void; 
 }
 

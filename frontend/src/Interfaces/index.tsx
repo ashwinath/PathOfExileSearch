@@ -53,13 +53,13 @@ interface SearchResultsState {
 }
 
 export {
-  SearchState,
-  UserInput,
-  FormData,
-  PoeItem,
-  SearchItemResult,
-  SearchFormProps,
-  MainState,
-  SearchItemsResultsProps,
   SearchResultsState,
+  SearchItemsResultsProps,
+  MainState,
+  SearchFormProps,
+  SearchItemResult,
+  PoeItem,
+  FormData,
+  UserInput,
+  SearchState,
 };

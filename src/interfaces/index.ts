@@ -41,10 +41,99 @@ interface SearchResponse extends BaseResponse {
   data: EsPoeItem[];
 }
 
+interface PoeNinjaMappings {
+  itemType: string;
+  hasCurrencyDetails: boolean;
+}
+
+interface PoeNinjaWithCurrencyDetailsResponse {
+  lines: PoeNinjaLines[];
+  currencyDetails: PoeNinjaCurrencyDetails[];
+}
+
+interface PoeNinjaLines {
+  currencyTypeName: string;
+  pay?: CurrencyInformation;
+  receive?: CurrencyInformation;
+  paySparkLine: SparkLine;
+  receiveSparkLine: SparkLine;
+}
+
+interface SparkLine {
+  data: number[];
+  totalChange: number;
+}
+
+interface CurrencyInformation {
+  id: number;
+  league_id: number;
+  pay_currency_id: number;
+  get_currency_id: number;
+  sample_time_utc: string
+  count: number;
+  value: number;
+  data_point_count: number;
+  includes_secondary: boolean;
+}
+
+interface PoeNinjaCurrencyDetails {
+  id: number;
+  icon: string;
+  name: string;
+  poeTradeId: number;
+}
+
+interface PoeNinjaDefaultLines {
+  name?: string;
+  currencyTypeName?: string;
+  id: number;
+  icon: string;
+  sparkline?: SparkLine;
+  chaosValue: number;
+  exaltedValue: number;
+}
+
+interface PoeNinjaResponse {
+  lines: PoeNinjaDefaultLines[];
+}
+
+interface PoeNinjaEsItem {
+  name: string;
+}
+
+interface PoeNinjaLineEsItem extends PoeNinjaEsItem {
+  pay: number;
+  paySparkLine: number[];
+  receive: number;
+  receiveSparkLine: number[];
+}
+
+interface PoeNinjaCurrencyEsItem extends PoeNinjaEsItem {
+  imageUrl: string;
+}
+
+interface PoeDefaultEsItem extends PoeNinjaEsItem {
+  imageUrl: string;
+  sparkLine: number[];
+  chaosValue: number;
+  exaltedValue: number;
+}
+
 export {
   EsPoeItem,
   EsSearchResult,
   SearchItemRequest,
   FormResponse,
   SearchResponse,
+  PoeNinjaResponse,
+  PoeNinjaCurrencyDetails,
+  CurrencyInformation,
+  SparkLine,
+  PoeNinjaLines,
+  PoeNinjaWithCurrencyDetailsResponse,
+  PoeNinjaMappings,
+  PoeNinjaLineEsItem,
+  PoeNinjaEsItem,
+  PoeNinjaCurrencyEsItem,
+  PoeDefaultEsItem,
 };

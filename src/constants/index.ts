@@ -1,0 +1,5 @@
+const urlMappings = {
+
+};
+
+export { urlMappings };

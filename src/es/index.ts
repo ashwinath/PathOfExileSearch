@@ -3,7 +3,8 @@ import logger from "../logger";
 import {
   EsPoeItem,
   EsSearchResult,
-  SearchItemRequest
+  SearchItemRequest,
+  PoeNinjaEsItem,
 } from "../interfaces";
 
 class ElasticSearchStore {
@@ -42,6 +43,12 @@ class ElasticSearchStore {
           "requiredLevel": { "type": "integer" },
           "requiredLevelBase": { "type": "integer" },
           "requiredStrength": { "type": "integer" },
+          "poeNinja": {
+            "properties": {
+              "receive": { "type": "float" },
+              "pay": { "type": "float" }
+            }
+          }
         }
       }
       await this.es.indices.putMapping({
@@ -232,6 +239,24 @@ class ElasticSearchStore {
       }
     }
     return intermediate;
+  }
+
+  public async updateItemIndex(item: PoeNinjaEsItem) {
+    try {
+      await this.es.update({
+          index: "items",
+          type: "document",
+          body: {
+            doc: {
+              "poeNinja": item
+            }
+          },
+          id: item.name,
+      });
+    } catch (error) {
+      logger.warn(item.name)
+      logger.warn(error.message)
+    }
   }
 }
 
