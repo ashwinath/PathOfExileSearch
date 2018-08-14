@@ -57,7 +57,7 @@ class PoeNinjaScraper implements Etl {
       for (let i = 0; i < currencyDetails.length; ++i) {
         const currency = currencyDetails[i];
         const name = currency.name;
-        const imageUrl = currency.icon;
+        const imageUrl = this.getBaseImageUrl(currency.icon);
         const poeNinjaItem = {
           name,
           imageUrl,
@@ -110,7 +110,7 @@ class PoeNinjaScraper implements Etl {
           continue;
         }
 
-        const imageUrl = line.icon;
+        const imageUrl = this.getBaseImageUrl(line.icon);
         let sparkLine: number[] | null = null;
         if (line.sparkline) {
           sparkLine = line.sparkline.data;
@@ -132,6 +132,10 @@ class PoeNinjaScraper implements Etl {
       logger.warn(url)
       logger.warn(error.message)
     }
+  }
+
+  private getBaseImageUrl(url: string) {
+    return url.split("?")[0]
   }
 
   private generateUrl(itemType: string, currency: boolean) {

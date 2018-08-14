@@ -139,7 +139,7 @@ class MainIndexer implements Etl {
       "format": "json",
       'tables': 'items',
       'fields': this.PROJECTIONS.join(","),
-      'where': 'class<>"Microtransactions"',
+      'where': 'class<>"Microtransactions" AND class<>"Leaguestones" AND class<>"Hideout Doodads" AND rarity="Unique"',
       "group_by": "name",
       "order_by": "name",
       "limit": limit,
