@@ -1,43 +1,15 @@
 interface SearchItemRequest {
   name?: string;
   className?: string;
-  baseItem?: string;
+  baseType?: string;
   implicitStatText?: string;
   explicitStatText?: string;
   requiredLevel?: number;
 }
 
-interface EsPoeItem {
-  name: string;
-  className: string;
-  baseItem: string;
-  dropLevel: number;
-  dropLevelMaximum: number;
-  requiredDexterity: number
-  requiredIntelligence: number;
-  requiredLevel: number;
-  requiredLevelBase: number;
-  requiredStrength: number;
-  mods: string[];
-  id: string;
-  poeNinja?: ServerPoeNinjaResponse;
-}
-
-interface ServerPoeNinjaResponse {
-  chaosValue?: string;
-  exaltedValue?: string;
-  imageUrl: string;
-  name: string;
-  sparkLine?: number[];
-  receive?: number;
-  receiveSparkLine?: number[];
-  pay?: number;
-  paySparkLine?: number[];
-}
-
 interface EsSearchResult {
   success: boolean;
-  result: EsPoeItem[];
+  result: object;
   error?: string;
 }
 
@@ -47,11 +19,11 @@ interface BaseResponse {
 
 interface FormResponse extends BaseResponse {
   classNames: string[];
-  baseItems: string[];
+  baseTypes: string[];
 }
 
 interface SearchResponse extends BaseResponse {
-  data: EsPoeItem[];
+  data: object;
 }
 
 interface PoeNinjaMappings {
@@ -68,11 +40,12 @@ interface PoeNinjaLines {
   currencyTypeName: string;
   pay?: CurrencyInformation;
   receive?: CurrencyInformation;
-  paySparkLine: SparkLine;
-  receiveSparkLine: SparkLine;
+  paySparkline?: Sparkline;
+  receiveSparkline?: Sparkline;
+  chaosEquivalent: number;
 }
 
-interface SparkLine {
+interface Sparkline {
   data: number[];
   totalChange: number;
 }
@@ -99,11 +72,28 @@ interface PoeNinjaCurrencyDetails {
 interface PoeNinjaDefaultLines {
   name?: string;
   currencyTypeName?: string;
+  mapTier: number;
+  levelRequired: number;
+  baseType: string;
+  stackSize: number;
+  prophecyText?: string;
   id: number;
   icon: string;
-  sparkline?: SparkLine;
+  sparkline?: Sparkline;
   chaosValue: number;
   exaltedValue: number;
+  implicitModifiers: ModifierType[];
+  explicitModifiers: ModifierType[];
+  flavourText: string;
+  corrupted: boolean;
+  gemLevel: number;
+  gemQuality: number;
+  itemType: string;
+}
+
+interface ModifierType {
+  text: string;
+  optional: boolean;
 }
 
 interface PoeNinjaResponse {
@@ -116,9 +106,9 @@ interface PoeNinjaEsItem {
 
 interface PoeNinjaLineEsItem extends PoeNinjaEsItem {
   pay: number;
-  paySparkLine: number[];
+  paySparkline: number[];
   receive: number;
-  receiveSparkLine: number[];
+  receiveSparkline: number[];
 }
 
 interface PoeNinjaCurrencyEsItem extends PoeNinjaEsItem {
@@ -132,8 +122,42 @@ interface PoeDefaultEsItem extends PoeNinjaEsItem {
   exaltedValue: number;
 }
 
+interface EsItem {
+  id: string; // We use the name as the primary key.
+}
+
+interface PoeNinjaItem extends EsItem {
+  imageUrl?: string;
+  name?: string;
+  poeTradeId?: number;
+  mapTier?: number;
+  levelRequired?: number;
+  baseType?: string;
+  stackSize?: number;
+  prophecyText?: string;
+  sparkline?: number[];
+  implicit?: string[];
+  explicit?: string[];
+  flavourText?: string;
+  corrupted?: boolean;
+  gemLevel?: number;
+  gemQuality?: number;
+  itemType?: string;
+  pay?: number;
+  receive?: number;
+  isCurrency: boolean;
+  paySparkline?: number[];
+  receiveSparkline?: number[];
+  chaosValue?: number;
+  exaltedValue?: number;
+}
+
+interface Etl {
+  process(): void;
+}
+
 export {
-  EsPoeItem,
+  Etl,
   EsSearchResult,
   SearchItemRequest,
   FormResponse,
@@ -141,12 +165,14 @@ export {
   PoeNinjaResponse,
   PoeNinjaCurrencyDetails,
   CurrencyInformation,
-  SparkLine,
+  Sparkline,
   PoeNinjaLines,
   PoeNinjaWithCurrencyDetailsResponse,
   PoeNinjaMappings,
   PoeNinjaLineEsItem,
+  PoeNinjaItem,
   PoeNinjaEsItem,
   PoeNinjaCurrencyEsItem,
   PoeDefaultEsItem,
+  EsItem,
 };

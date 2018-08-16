@@ -1,12 +1,13 @@
-import { Etl } from "./";
 import moment from "moment";
 import axios from "axios";
 import elasticSearchStore from "../es";
 import logger from "../logger";
 import {
+  Etl,
   PoeNinjaMappings,
   PoeNinjaWithCurrencyDetailsResponse,
-  PoeNinjaResponse
+  PoeNinjaResponse,
+  PoeNinjaItem,
 } from "../interfaces";
 
 class PoeNinjaScraper implements Etl {
@@ -58,35 +59,46 @@ class PoeNinjaScraper implements Etl {
         const currency = currencyDetails[i];
         const name = currency.name;
         const imageUrl = this.getBaseImageUrl(currency.icon);
-        const poeNinjaItem = {
-          name,
-          imageUrl,
-        };
-        await elasticSearchStore.updateItemIndex(poeNinjaItem);
+
+        const poeNinjaItem: PoeNinjaItem = {
+          id: name,
+          imageUrl: imageUrl,
+          isCurrency: true,
+        }
+        await elasticSearchStore.store("items", poeNinjaItem);
       }
 
       const lines = response.data.lines;
       for (let i = 0; i < lines.length; ++i) {
         const line = lines[i];
         const name = line.currencyTypeName;
-        let pay: number | null = null;
+        let pay: number | undefined = undefined;
         if (line.pay) {
           pay = line.pay.value;
         }
-        const paySparkLine = line.paySparkLine.data;
-        let receive: number | null = null;
+        let paySparkline: number[] | undefined = undefined;
+        if (line.paySparkline) {
+          paySparkline = line.paySparkline.data;
+        }
+        let receive: number | undefined = undefined;
         if (line.receive) {
           receive = line.receive.value;
         }
-        const receiveSparkLine = line.receiveSparkLine.data;
-        const poeNinjaItem = {
+        let receiveSparkline: number[] | undefined = undefined;
+        if (line.receiveSparkline) {
+          receiveSparkline = line.receiveSparkline.data;
+        }
+        const poeNinjaItem: PoeNinjaItem = {
+          id: name,
           name,
           pay,
-          paySparkLine,
+          paySparkline,
           receive,
-          receiveSparkLine,
+          receiveSparkline,
+          chaosValue: line.chaosEquivalent,
+          isCurrency: true,
         };
-        await elasticSearchStore.updateItemIndex(poeNinjaItem);
+        await elasticSearchStore.store("items", poeNinjaItem);
       }
     } catch (error) {
       logger.error(error.message)
@@ -101,7 +113,7 @@ class PoeNinjaScraper implements Etl {
       for (let i = 0; i < lines.length; ++i) {
         const line = lines[i];
 
-        let name: string | null = null;
+        let name: string | undefined = undefined;
         if (line.name) {
           name = line.name
         } else if (line.currencyTypeName) {
@@ -111,22 +123,36 @@ class PoeNinjaScraper implements Etl {
         }
 
         const imageUrl = this.getBaseImageUrl(line.icon);
-        let sparkLine: number[] | null = null;
+        let sparkline: number[] | undefined = undefined;
         if (line.sparkline) {
-          sparkLine = line.sparkline.data;
+          sparkline = line.sparkline.data;
         }
         const chaosValue = line.chaosValue;
         const exaltedValue = line.exaltedValue;
 
-        const poeNinjaItem = {
+        const poeNinjaItem: PoeNinjaItem = {
+          id: name,
           name,
           imageUrl,
-          sparkLine,
+          sparkline,
           chaosValue,
           exaltedValue,
+          isCurrency: false,
+          mapTier: line.mapTier,
+          levelRequired: line.levelRequired,
+          baseType: line.baseType,
+          stackSize: line.stackSize,
+          prophecyText: line.prophecyText,
+          implicit: line.implicitModifiers.map((mod) => mod.text),
+          explicit: line.explicitModifiers.map((mod) => mod.text),
+          flavourText: line.flavourText,
+          corrupted: line.corrupted,
+          gemLevel: line.gemLevel,
+          gemQuality: line.gemQuality,
+          itemType: line.itemType,
         }
 
-        await elasticSearchStore.updateItemIndex(poeNinjaItem);
+        await elasticSearchStore.store("items", poeNinjaItem);
       }
     } catch (error) {
       logger.warn(url)
