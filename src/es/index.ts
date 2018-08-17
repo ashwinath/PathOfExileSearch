@@ -1,9 +1,9 @@
 import * as elasticsearch from "elasticsearch";
 import logger from "../logger";
 import {
-  //EsSearchResult,
-  //SearchItemRequest,
+  EsSearchResult,
   EsItem,
+  PoeNinjaItem,
 } from "../interfaces";
 
 class ElasticSearchStore {
@@ -11,10 +11,6 @@ class ElasticSearchStore {
     host: process.env.ES_HOST || "localhost:9200",
     log: "info",
   });
-
-  //private DEFAULT_SORT = [
-    //{ "requiredLevel": { "order": "desc" } },
-  //];
 
   public async sendItemMapping() {
     try {
@@ -73,172 +69,65 @@ class ElasticSearchStore {
     }
   }
 
-  //public async search(searchField: string, searchString: string, size: number): Promise<EsSearchResult> {
-    //try {
-      //const matchBody = {}
-      //matchBody[searchField] = searchString;
-      //const response = await this.es.search<EsPoeItem>({
-        //index: "items",
-        //body: {
-          //query: {
-            //match_phrase: matchBody,
-          //},
-          //sort: this.DEFAULT_SORT,
-        //},
-        //size: size,
-      //});
-
-      //return {
-        //success: true,
-        //result: response.hits.hits.map((item) => item._source),
-      //}
-    //} catch (error) {
-      //logger.error(error.message);
-      //return {
-        //success: false,
-        //result: [],
-        //error: error.message,
-      //}
-    //}
-  //}
-
-  //public async searchLevelRange(
-    //maxLevel: number, className: string, size: number): Promise<EsSearchResult> {
-    //try {
-      //const response = await this.es.search<EsPoeItem>({
-        //index: "items",
-        //body: {
-          //query: {
-            //bool: {
-              //must: [
-                //{
-                  //range: {
-                    //requiredLevel: {
-                      //lte: maxLevel,
-                    //},
-                  //}
-                //},
-                //{ term: { "className": className } },
-              //]
-            //}
-          //},
-          //sort: this.DEFAULT_SORT,
-        //},
-        //size: size,
-      //});
-
-      //return {
-        //success: true,
-        //result: response.hits.hits.map((item) => item._source),
-      //}
-    //} catch (error) {
-      //logger.error(error.message);
-      //return {
-        //success: false,
-        //result: [],
-        //error: error.message,
-      //}
-    //}
-  //}
-
-  // This returns a list of strings. the typing is not good for this
-  public async searchDistinctFields(index: string, field: string) {
+  public async search(index: string, searchString: string, itemCount: number): Promise<EsSearchResult> {
     try {
-      const response = await this.es.search({
+      console.log(searchString)
+      const response = await this.es.search<PoeNinjaItem>({
         index,
-        type: "document",
         body: {
-          size: 0,
-          aggs: {
-            aggregations: {
-              terms: {
-                field,
-                size: 99999,
-                order: { "_term": "asc" }
-              },
+          query: {
+            bool: {
+              should: [
+                {
+                  match_phrase_prefix: {
+                    name: searchString,
+                  }
+                },
+                {
+                  match: {
+                    implicit: {
+                      query: searchString,
+                    }
+                  }
+                },
+                {
+                  match: {
+                    explicit: {
+                      query: searchString,
+                    }
+                  }
+                },
+                {
+                  match: {
+                    itemType: {
+                      query: searchString
+                    }
+                  }
+                },
+                {
+                  match: {
+                    flavourText: searchString
+                  }
+                }
+              ]
             }
-          },
-        },
+          }
+        }
       });
-      return response.aggregations.aggregations.buckets.map((item) => item.key).filter((item) => item.key !== "")
-    } catch(error) {
+      return  {
+        success: true,
+        result: response.hits.hits.map((item) => item._source),
+      }
+    } catch (error) {
       logger.error(error.message)
+      return {
+        success: false,
+        result: [],
+        error: error.message,
+      }
     }
   }
 
-  //public async searchItem(request: SearchItemRequest): Promise<EsSearchResult> {
-    //try {
-      //const response = await this.es.search<EsPoeItem>({
-        //index: "items",
-        //type: "document",
-        //body: {
-          //size: 10,
-          //query: {
-            //bool: {
-              //must: this.mapToTerms(request)
-            //}
-          //}
-        //}
-      //});
-      //return {
-        //success: true,
-        //result: response.hits.hits.map((item) => item._source),
-      //}
-    //} catch (error) {
-      //logger.error(error.message)
-      //return {
-        //success: false,
-        //result: [],
-        //error: error.message,
-      //}
-    //}
-  //}
-
-  //private mapToTerms(request: SearchItemRequest) {
-    //const allowedTerms = [
-      //"name",
-      //"className",
-      //"baseTypes",
-      //"mods",
-      //"requiredLevel",
-    //];
-
-    //const intermediate: any[] = [] ;
-    //for (let key in request) {
-      //if (!allowedTerms.includes(key)) {
-        //logger.info("here")
-        //continue;
-      //}
-
-      //const value = request[key];
-      //const currentTerm = {};
-
-      //if (key === "requiredLevel") {
-        //currentTerm[key] = {
-          //gte: value,
-        //}
-        //if (value) {
-          //intermediate.push({ range: currentTerm });
-        //}
-      //} else if (key === "className" || key === "baseItem") {
-        //currentTerm[key] = value;
-        //if (value) {
-          //intermediate.push({ term: currentTerm });
-        //}
-      //} else if (key === "name") {
-        //currentTerm[key] = value;
-        //if (value) {
-          //intermediate.push({ match_phrase_prefix: currentTerm });
-        //}
-      //} else {
-        //currentTerm[key] = value;
-        //if (value) {
-          //intermediate.push({ match: currentTerm });
-        //}
-      //}
-    //}
-    //return intermediate;
-  //}
 }
 
 const elasticSearchStore = new ElasticSearchStore();

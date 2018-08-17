@@ -1,12 +1,3 @@
-interface SearchItemRequest {
-  name?: string;
-  className?: string;
-  baseType?: string;
-  implicitStatText?: string;
-  explicitStatText?: string;
-  requiredLevel?: number;
-}
-
 interface EsSearchResult {
   success: boolean;
   result: object;
@@ -159,7 +150,6 @@ interface Etl {
 export {
   Etl,
   EsSearchResult,
-  SearchItemRequest,
   FormResponse,
   SearchResponse,
   PoeNinjaResponse,
