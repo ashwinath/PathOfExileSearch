@@ -2,6 +2,7 @@ import * as React from "react";
 import { Row, Col } from "reactstrap";
 import { SearchItemsResultsProps, SearchResultsState } from "../Interfaces";
 import SearchResultList from "./SearchResultList";
+import SearchResultDetails from "./SearchResultDetails";
 
 class SearchItemsResults extends React.Component<SearchItemsResultsProps, SearchResultsState> {
 
@@ -18,11 +19,11 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
         ...this.state,
         poeItems: nextProps.poeItems,
       };
-    })
+    });
   }
 
   public shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.poeItems !== this.state.poeItems;
+    return (nextProps.poeItems !== this.state.poeItems);
   }
 
   public render() {
@@ -40,14 +41,14 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
         gemLevel: item.gemLevel,
         gemQuality: item.gemQuality,
       }
-    })
+    });
     return (
       <Row>
         <Col md="8">
           <SearchResultList searchResultsList={searchResultsList}/>
         </Col>
         <Col md="4">
-          <h1>Hello details</h1>
+          <SearchResultDetails/>
         </Col>
       </Row>
     );

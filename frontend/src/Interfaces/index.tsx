@@ -84,7 +84,17 @@ interface MiscInformationProps {
   source: string;
 }
 
+interface SearchResultDetailsProps {
+  item?: PoeNinjaItem;
+}
+
+interface SearchResultDetailsState {
+  item?: PoeNinjaItem;
+}
+
 export {
+  SearchResultDetailsProps,
+  SearchResultDetailsState,
   NavigationState,
   SearchResultsState,
   SearchItemsResultsProps,

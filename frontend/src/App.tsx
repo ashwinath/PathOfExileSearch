@@ -35,7 +35,6 @@ class App extends React.Component<{}, MainState> {
       };
     });
   }
-
 }
 
 export default App;
