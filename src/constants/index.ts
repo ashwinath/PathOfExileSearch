@@ -1,5 +1,0 @@
-const urlMappings = {
-
-};
-
-export { urlMappings };

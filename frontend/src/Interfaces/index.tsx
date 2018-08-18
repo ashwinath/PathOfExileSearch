@@ -1,6 +1,4 @@
-interface SearchState {
-  search: string;
-}
+import { Dispatch } from "redux";
 
 interface SearchItemResult {
   success: boolean;
@@ -8,15 +6,13 @@ interface SearchItemResult {
 }
 
 interface SearchFormProps {
-  onSearchFormChange: ((poeItems: PoeNinjaItem[]) => void);
-}
-
-interface MainState {
-  poeItems: PoeNinjaItem[];
+  dispatch: Dispatch;
+  searchKey: string;
 }
 
 interface SearchItemsResultsProps {
   poeItems: PoeNinjaItem[];
+  dispatch: Dispatch;
 }
 
 interface SearchResultsState {
@@ -98,10 +94,8 @@ export {
   NavigationState,
   SearchResultsState,
   SearchItemsResultsProps,
-  MainState,
   SearchFormProps,
   SearchItemResult,
-  SearchState,
   PoeNinjaItem,
   SearchResultListProps,
   SearchResultListItem,

@@ -3,31 +3,12 @@ import { Row, Col } from "reactstrap";
 import { SearchItemsResultsProps, SearchResultsState } from "../Interfaces";
 import SearchResultList from "./SearchResultList";
 import SearchResultDetails from "./SearchResultDetails";
+import { connect } from "react-redux";
 
 class SearchItemsResults extends React.Component<SearchItemsResultsProps, SearchResultsState> {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      poeItems: [],
-    };
-  }
-
-  public componentDidUpdate(nextProps) {
-    this.setState(() => {
-      return {
-        ...this.state,
-        poeItems: nextProps.poeItems,
-      };
-    });
-  }
-
-  public shouldComponentUpdate(nextProps, nextState) {
-    return (nextProps.poeItems !== this.state.poeItems);
-  }
-
   public render() {
-    const searchResultsList = this.state.poeItems.map((item) => {
+    const poeItems = this.props.poeItems || [];
+    const searchResultsList = poeItems.map((item) => {
       return {
         id: item.id,
         name: item.name,
@@ -55,4 +36,11 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
   }
 }
 
-export default SearchItemsResults;
+function mapStateToProps(state) {
+  const { poeItems } = state.search;
+  return {
+    poeItems,
+  }
+}
+
+export default connect(mapStateToProps)(SearchItemsResults);
