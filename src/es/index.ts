@@ -22,7 +22,7 @@ class ElasticSearchStore {
         "properties": {
           "name": {
             "type": "text",
-            "boost": 7,
+            "boost": 5,
           },
           "className": { "type": "keyword", },
           "baseType": { "type": "keyword", },

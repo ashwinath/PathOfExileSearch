@@ -115,6 +115,7 @@ interface PoeDefaultEsItem extends PoeNinjaEsItem {
 
 interface EsItem {
   id: string; // We use the name as the primary key.
+  source: string;
 }
 
 interface PoeNinjaItem extends EsItem {

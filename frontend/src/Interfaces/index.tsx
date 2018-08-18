@@ -25,11 +25,12 @@ interface SearchResultsState {
 
 interface EsItem {
   id: string; // We use the name as the primary key.
+  source: string;
 }
 
 interface PoeNinjaItem extends EsItem {
-  imageUrl?: string;
-  name?: string;
+  imageUrl: string;
+  name: string;
   poeTradeId?: number;
   mapTier?: number;
   levelRequired?: number;
@@ -49,11 +50,29 @@ interface PoeNinjaItem extends EsItem {
   isCurrency: boolean;
   paySparkline?: number[];
   receiveSparkline?: number[];
-  chaosValue?: number;
+  chaosValue: number;
   exaltedValue?: number;
 }
 
+interface NavigationState {
+  isOpen: boolean;
+}
+
+interface SearchResultListProps {
+  searchResultsList: SearchResultListItem[];
+}
+
+interface SearchResultListItem {
+  id: string;
+  name: string;
+  imageUrl: string;
+  price: number;
+  baseType?: string;
+  source: string;
+}
+
 export {
+  NavigationState,
   SearchResultsState,
   SearchItemsResultsProps,
   MainState,
@@ -61,4 +80,6 @@ export {
   SearchItemResult,
   SearchState,
   PoeNinjaItem,
+  SearchResultListProps,
+  SearchResultListItem,
 };

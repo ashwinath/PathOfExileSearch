@@ -1,9 +1,9 @@
 import axios from "axios";
 import * as React from "react";
 import {
-  Container,
-  Label,
   Input,
+  InputGroup,
+  InputGroupAddon,
 } from "reactstrap";
 import {
   SearchState,
@@ -40,17 +40,17 @@ class SearchForm extends React.Component<SearchFormProps, SearchState> {
 
   public render() {
     return (
-      <Container>
-        <h1>Path Of Exile Search</h1>
-        <div>
-          <Label className="form-label-search">Search Anything</Label>
+      <div>
+        <InputGroup size="lg">
+          <InputGroupAddon addonType="prepend">Search anything</InputGroupAddon>
           <Input type="text"
             name="search-mods"
             id="search-mods"
+            placeholder="Search names, mods, item types, flavour texts..."
             onChange={this.onUserInputChange}
             value={this.state.search}/>
-        </div>
-      </Container>
+        </InputGroup>
+      </div>
     );
   }
 

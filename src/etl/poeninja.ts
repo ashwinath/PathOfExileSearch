@@ -44,14 +44,14 @@ class PoeNinjaScraper implements Etl {
     logger.info(`Downloading PoeNinja mapping = ${mapping.itemType}`)
     const url = this.generateUrl(mapping.itemType, mapping.hasCurrencyDetails);
     if (mapping.hasCurrencyDetails) {
-      await this.downloadPoeNinjaWithCurrencyDetails(url);
+      await this.downloadPoeNinjaWithCurrencyDetails(url, mapping.itemType);
     } else {
-      await this.downloadPoeNinja(url);
+      await this.downloadPoeNinja(url, mapping.itemType);
     }
     logger.info(`Finished downloading PoeNinja mapping = ${mapping.itemType}`)
   }
 
-  private async downloadPoeNinjaWithCurrencyDetails(url: string) {
+  private async downloadPoeNinjaWithCurrencyDetails(url: string, source: string) {
     try {
       const response = await axios.get<PoeNinjaWithCurrencyDetailsResponse>(url);
       const currencyDetails = response.data.currencyDetails;
@@ -62,6 +62,7 @@ class PoeNinjaScraper implements Etl {
 
         const poeNinjaItem: PoeNinjaItem = {
           id: name,
+          source,
           imageUrl: imageUrl,
           isCurrency: true,
         }
@@ -90,6 +91,7 @@ class PoeNinjaScraper implements Etl {
         }
         const poeNinjaItem: PoeNinjaItem = {
           id: name,
+          source,
           name,
           pay,
           paySparkline,
@@ -106,7 +108,7 @@ class PoeNinjaScraper implements Etl {
 
   }
 
-  private async downloadPoeNinja(url: string) {
+  private async downloadPoeNinja(url: string, source: string) {
     try {
       const response = await axios.get<PoeNinjaResponse>(url);
       const lines = response.data.lines;
@@ -129,9 +131,11 @@ class PoeNinjaScraper implements Etl {
         }
         const chaosValue = line.chaosValue;
         const exaltedValue = line.exaltedValue;
+        const id = "" + line.id;
 
         const poeNinjaItem: PoeNinjaItem = {
-          id: name,
+          id,
+          source,
           name,
           imageUrl,
           sparkline,
