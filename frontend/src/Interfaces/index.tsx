@@ -34,7 +34,7 @@ interface PoeNinjaItem extends EsItem {
   poeTradeId?: number;
   mapTier?: number;
   levelRequired?: number;
-  baseType?: string;
+  baseType: string;
   stackSize?: number;
   prophecyText?: string;
   sparkline?: number[];
@@ -44,7 +44,7 @@ interface PoeNinjaItem extends EsItem {
   corrupted?: boolean;
   gemLevel?: number;
   gemQuality?: number;
-  itemType?: string;
+  itemType: string;
   pay?: number;
   receive?: number;
   isCurrency: boolean;
@@ -71,6 +71,17 @@ interface SearchResultListItem {
   source: string;
   links?: number;
   exaltedValue: number;
+  baseType?: string;
+  corrupted?: boolean;
+  gemLevel?: number;
+  gemQuality?: number;
+}
+
+interface MiscInformationProps {
+  links?: number;
+  gemLevel?: number;
+  gemQuality?: number;
+  source: string;
 }
 
 export {
@@ -84,4 +95,5 @@ export {
   PoeNinjaItem,
   SearchResultListProps,
   SearchResultListItem,
+  MiscInformationProps,
 };

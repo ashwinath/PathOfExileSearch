@@ -81,7 +81,11 @@ class ElasticSearchStore {
           sort: [
             "_score",
             { "name.keyword" : { order: "asc" } },
+            { gemLevel : { order: "desc" } },
+            { gemQuality : { order: "desc" } },
             { links : { order: "desc" } },
+            { corrupted : { order: "asc" } },
+            { chaosValue : { order: "asc" } },
           ],
           query: {
             bool: {

@@ -35,14 +35,18 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
         exaltedValue: item.exaltedValue,
         source: item.source,
         links: item.links,
+        baseType: item.baseType,
+        corrupted: item.corrupted,
+        gemLevel: item.gemLevel,
+        gemQuality: item.gemQuality,
       }
     })
     return (
       <Row>
-        <Col md="4">
+        <Col md="8">
           <SearchResultList searchResultsList={searchResultsList}/>
         </Col>
-        <Col md="8">
+        <Col md="4">
           <h1>Hello details</h1>
         </Col>
       </Row>
