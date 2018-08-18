@@ -80,6 +80,7 @@ interface PoeNinjaDefaultLines {
   gemLevel: number;
   gemQuality: number;
   itemType: string;
+  links?: number;
 }
 
 interface ModifierType {
@@ -142,6 +143,7 @@ interface PoeNinjaItem extends EsItem {
   receiveSparkline?: number[];
   chaosValue?: number;
   exaltedValue?: number;
+  links?: number;
 }
 
 interface Etl {

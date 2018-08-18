@@ -13,7 +13,6 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
   }
 
   public componentDidUpdate(nextProps) {
-    console.log(nextProps)
     this.setState(() => {
       return {
         ...this.state,
@@ -32,9 +31,10 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
         id: item.id,
         name: item.name,
         imageUrl: item.imageUrl,
-        price: item.chaosValue,
-        baseType: item.baseType,
+        chaosValue: item.chaosValue,
+        exaltedValue: item.exaltedValue,
         source: item.source,
+        links: item.links,
       }
     })
     return (

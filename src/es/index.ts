@@ -21,7 +21,7 @@ class ElasticSearchStore {
       const mapping = {
         "properties": {
           "name": {
-            "type": "text",
+            "type": "keyword",
             "boost": 5,
           },
           "className": { "type": "keyword", },
@@ -47,6 +47,7 @@ class ElasticSearchStore {
           "gemLevel": { "type": "number" },
           "gemQuality": { "type": "integer" },
           "itemType": { "type": "keyword" },
+          "links": { "type": "integer" },
         }
       }
       await this.es.indices.putMapping({
@@ -74,10 +75,14 @@ class ElasticSearchStore {
 
   public async search(index: string, searchString: string, itemCount: number): Promise<EsSearchResult> {
     try {
-      console.log(searchString)
       const response = await this.es.search<PoeNinjaItem>({
         index,
         body: {
+          sort: [
+            "_score",
+            { "name.keyword" : { order: "asc" } },
+            { links : { order: "desc" } },
+          ],
           query: {
             bool: {
               should: [

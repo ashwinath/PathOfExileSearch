@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SearchResultListProps, SearchResultListItem } from "../Interfaces";
 import { Row, Col, CardImg } from "reactstrap";
-import { mapSourceToName } from "../Utils/Mappings";
 import "./SearchResultList.css";
 
 class SearchResultList extends React.Component<SearchResultListProps, {}> {
@@ -22,21 +21,29 @@ class SearchResultList extends React.Component<SearchResultListProps, {}> {
   }
 }
 
+const sourcesWithLinkableSockets = [
+  "UniqueWeapon",
+  "UniqueArmour",
+];
+
 function SearchResultItem(props: SearchResultListItem) {
   const {
     name,
     imageUrl,
-    price,
-    baseType,
+    chaosValue,
+    exaltedValue,
     source,
+    links,
   } = props;
   const size = "90px";
-
-  const baseItem = baseType ? baseType : mapSourceToName(source);
+  let linkedText = "";
+  if (sourcesWithLinkableSockets.indexOf(source) >= 0) {
+    linkedText = links === 0 ? "0-4 linked" : `${links}-linked`;
+  }
 
   return (
     <Row className="d-flex align-items-center item-container">
-      <Col className="center" ms="3">
+      <Col className="center" ms="2">
         <CardImg
           style={{
             maxHeight: size,
@@ -51,10 +58,13 @@ function SearchResultItem(props: SearchResultListItem) {
         <h6>{name}</h6>
       </Col>
       <Col className="center" ms="3">
-        <h6>{baseItem}</h6>
+        <h6>{linkedText}</h6>
       </Col>
-      <Col className="center" ms="3">
-        <h6>{price} Chaos</h6>
+      <Col className="center" ms="2">
+        <h6>{chaosValue} Chaos</h6>
+      </Col>
+      <Col className="center" ms="2">
+        <h6>{exaltedValue} Exalteds</h6>
       </Col>
     </Row>
   );

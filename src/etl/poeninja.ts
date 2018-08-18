@@ -154,6 +154,7 @@ class PoeNinjaScraper implements Etl {
           gemLevel: line.gemLevel,
           gemQuality: line.gemQuality,
           itemType: line.itemType,
+          links: line.links,
         }
 
         await elasticSearchStore.store("items", poeNinjaItem);

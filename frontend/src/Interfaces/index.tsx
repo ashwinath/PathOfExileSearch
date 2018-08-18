@@ -51,7 +51,8 @@ interface PoeNinjaItem extends EsItem {
   paySparkline?: number[];
   receiveSparkline?: number[];
   chaosValue: number;
-  exaltedValue?: number;
+  exaltedValue: number;
+  links?: number;
 }
 
 interface NavigationState {
@@ -66,9 +67,10 @@ interface SearchResultListItem {
   id: string;
   name: string;
   imageUrl: string;
-  price: number;
-  baseType?: string;
+  chaosValue: number;
   source: string;
+  links?: number;
+  exaltedValue: number;
 }
 
 export {
