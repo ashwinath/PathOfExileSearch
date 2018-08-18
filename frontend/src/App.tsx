@@ -1,6 +1,6 @@
 import * as React from "react";
 import SearchForm from "./Components/SearchForm";
-import { PoeItem, MainState } from "./Interfaces";
+import { PoeNinjaItem, MainState } from "./Interfaces";
 import SearchItemsResults from "./Components/SearchItemsResults";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
@@ -25,7 +25,7 @@ class App extends React.Component<{}, MainState> {
     );
   }
 
-  private onSearchFormChange(poeItems: PoeItem[]) {
+  private onSearchFormChange(poeItems: PoeNinjaItem[]) {
     this.setState(() => {
       return {
         ...this.state,

@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Container, Row, Col, CardImg } from "reactstrap";
-import { SearchItemsResultsProps, SearchResultsState, PoeItem } from "../Interfaces";
+import { SearchItemsResultsProps, SearchResultsState, PoeNinjaItem } from "../Interfaces";
 
 class SearchItemsResults extends React.Component<SearchItemsResultsProps, SearchResultsState> {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +29,7 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
       <Container style={{paddingTop: "20px"}}>
         <div>
           {
-            this.state.poeItems.map((item) => <PoeItem key={item.name} item={item}/>)
+            this.state.poeItems.map((item) => <PoeNinjaItem key={item.name} item={item}/>)
           }
         </div>
       </Container>
@@ -36,13 +37,10 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
   }
 }
 
-function PoeItem({ item }: { item: PoeItem }) {
-  const poeNinja = item.poeNinja;
-  let imageUrl = "https://vignette.wikia.nocookie.net/pineapplepedia/images/3/3c/No-images-placeholder.png";
-  if (poeNinja) {
-    imageUrl = poeNinja.imageUrl;
-  }
-  console.log(imageUrl)
+const DEFAULT_IMG = "https://vignette.wikia.nocookie.net/pineapplepedia/images/3/3c/No-images-placeholder.png";
+
+function PoeNinjaItem({ item }: { item: PoeNinjaItem }) {
+  const imageUrl = item.imageUrl || DEFAULT_IMG;
   return (
     <Row>
       <Col md="2" xs="4">
@@ -53,13 +51,11 @@ function PoeItem({ item }: { item: PoeItem }) {
       </Col>
       <Col>
         <h3>{item.name}</h3>
-        <h6>{item.baseItem}</h6>
-        <h6>{item.className}</h6>
-        {item.requiredLevel ? <h6>Required Level: {item.requiredLevel}</h6>: null}
-        {item.requiredStrength ? <h6>Required Strength: {item.requiredStrength}</h6>: null}
-        {item.requiredDexterity ? <h6>Required Dexterity: {item.requiredDexterity}</h6>: null}
-        {item.requiredIntelligence ? <h6>Required Intelligence: {item.requiredIntelligence}</h6>: null}
-        {item.mods.map((mod) => <h6 key={name+mod}>{mod}</h6>)}
+        {item.baseType ? <h6>Base Type: {item.baseType}</h6> : null}
+        {item.itemType !== "Unknown"? <h6>Item Type: {item.itemType}</h6> : null}
+        {item.levelRequired ? <h6>Required Level: {item.levelRequired}</h6> : null}
+        {item.implicit ? <h6>{item.implicit}</h6> : null}
+        {item.explicit ? item.explicit.map((mod) => <h6 key={name+mod}>{mod}</h6>) : null}
       </Col>
     </Row>
   );

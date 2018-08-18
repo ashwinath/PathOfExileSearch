@@ -1,68 +1,56 @@
 interface SearchState {
-  data: FormData
-  selectedClassName: string;
-  userInput: UserInput;
-}
-
-interface UserInput {
-  name: string;
-  className: string;
-  baseItem: string;
-  mods: string;
-  requiredLevel: string;
-}
-
-interface FormData {
-  classNames: string[];
-  baseItems: string[];
-}
-
-interface PoeItem {
-  name: string;
-  className: string;
-  baseItem: string;
-  mods: string[];
-  dropLevel: number;
-  dropLevelMaximum: number;
-  requiredDexterity: number
-  requiredIntelligence: number;
-  requiredLevel: number;
-  requiredLevelBase: number;
-  requiredStrength: number;
-  poeNinja?: ServerPoeNinjaResponse;
-}
-
-interface ServerPoeNinjaResponse {
-  chaosValue?: string;
-  exaltedValue?: string;
-  imageUrl: string;
-  name: string;
-  sparkLine?: number[];
-  receive?: number;
-  receiveSparkLine?: number[];
-  pay?: number;
-  paySparkLine?: number[];
+  search: string;
 }
 
 interface SearchItemResult {
   success: boolean;
-  data: PoeItem[];
+  data: PoeNinjaItem[];
 }
 
 interface SearchFormProps {
-  onSearchFormChange: ((poeItems: PoeItem[]) => void);
+  onSearchFormChange: ((poeItems: PoeNinjaItem[]) => void);
 }
 
 interface MainState {
-  poeItems: PoeItem[];
+  poeItems: PoeNinjaItem[];
 }
 
 interface SearchItemsResultsProps {
-  poeItems: PoeItem[];
+  poeItems: PoeNinjaItem[];
 }
 
 interface SearchResultsState {
-  poeItems: PoeItem[];
+  poeItems: PoeNinjaItem[];
+}
+
+interface EsItem {
+  id: string; // We use the name as the primary key.
+}
+
+interface PoeNinjaItem extends EsItem {
+  imageUrl?: string;
+  name?: string;
+  poeTradeId?: number;
+  mapTier?: number;
+  levelRequired?: number;
+  baseType?: string;
+  stackSize?: number;
+  prophecyText?: string;
+  sparkline?: number[];
+  implicit?: string[];
+  explicit?: string[];
+  flavourText?: string;
+  corrupted?: boolean;
+  gemLevel?: number;
+  gemQuality?: number;
+  itemType?: string;
+  pay?: number;
+  receive?: number;
+  isCurrency: boolean;
+  paySparkline?: number[];
+  receiveSparkline?: number[];
+  chaosValue?: number;
+  exaltedValue?: number;
 }
 
 export {
@@ -71,8 +59,6 @@ export {
   MainState,
   SearchFormProps,
   SearchItemResult,
-  PoeItem,
-  FormData,
-  UserInput,
   SearchState,
+  PoeNinjaItem,
 };
