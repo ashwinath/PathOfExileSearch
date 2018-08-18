@@ -20,7 +20,10 @@ class ElasticSearchStore {
 
       const mapping = {
         "properties": {
-          "name": { "type": "text" },
+          "name": {
+            "type": "text",
+            "boost": 7,
+          },
           "className": { "type": "keyword", },
           "baseType": { "type": "keyword", },
           "implicit": {
@@ -80,6 +83,11 @@ class ElasticSearchStore {
               should: [
                 {
                   match_phrase_prefix: {
+                    name: searchString,
+                  },
+                },
+                {
+                  match: {
                     name: searchString,
                   }
                 },
