@@ -161,7 +161,7 @@ class PoeNinjaScraper implements Etl {
   }
 
   private getBaseImageUrl(url: string) {
-    return url.split("?")[0]
+    return url.split("?")[0].replace("http", "https");
   }
 
   private generateUrl(itemType: string, currency: boolean) {
