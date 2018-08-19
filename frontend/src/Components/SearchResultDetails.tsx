@@ -90,6 +90,9 @@ function DivinationCardExplict(props: DivinationCardExplictProps) {
       case "divination":
         cssName = "divination-card-divination-card";
         break;
+      case "prophecy":
+        cssName = "divination-card-prophecy"
+        break;
       case "whiteitem":
         cssName = "divination-card-whiteitem";
         break;
