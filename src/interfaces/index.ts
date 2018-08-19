@@ -31,8 +31,8 @@ interface PoeNinjaLines {
   currencyTypeName: string;
   pay?: CurrencyInformation;
   receive?: CurrencyInformation;
-  paySparkline?: Sparkline;
-  receiveSparkline?: Sparkline;
+  paySparkLine?: Sparkline;
+  receiveSparkLine?: Sparkline;
   chaosEquivalent: number;
 }
 
@@ -54,7 +54,7 @@ interface CurrencyInformation {
 }
 
 interface PoeNinjaCurrencyDetails {
-  id: number;
+  id: string;
   icon: string;
   name: string;
   poeTradeId: number;
@@ -115,7 +115,7 @@ interface PoeDefaultEsItem extends PoeNinjaEsItem {
 }
 
 interface EsItem {
-  id: string; // We use the name as the primary key.
+  id?: string; // We use the name as the primary key.
   source: string;
 }
 

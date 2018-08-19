@@ -16,8 +16,8 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
 
     // Theres a hidden \r inside
     let flavourText = item.flavourText === "" 
-        && item.flavourText.replace(/\r/g, "") ? null
-        : item.flavourText.replace(/\r/g, "");
+        && item.flavourText.replace(/\r/g, "") ? item.flavourText.replace(/\r/g, "")
+        : null;
 
     if (typeof flavourText === "string") {
       const flavourTextMatch = flavourText.match(/\{(.*?)\}/g);

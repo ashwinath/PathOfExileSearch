@@ -73,7 +73,7 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
           <h6>{chaosValue} Chaos</h6>
         </Col>
         <Col className="center" ms="1">
-          <h6>{exaltedValue} Exalteds</h6>
+          {exaltedValue ? <h6>{exaltedValue} Exalteds</h6> : null}
         </Col>
       </Row>
     );

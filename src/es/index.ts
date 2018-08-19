@@ -48,6 +48,7 @@ class ElasticSearchStore {
           "gemQuality": { "type": "integer" },
           "itemType": { "type": "keyword" },
           "links": { "type": "integer" },
+          "source": { "type": "keyword" },
         }
       }
       await this.es.indices.putMapping({

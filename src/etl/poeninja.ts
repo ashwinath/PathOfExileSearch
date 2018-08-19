@@ -14,8 +14,8 @@ class PoeNinjaScraper implements Etl {
   private LEAGUE = "Incursion";
 
   private MAPPINGS = [
-    { itemType: "Currency", hasCurrencyDetails: true },
     { itemType: "Fragment", hasCurrencyDetails: true },
+    { itemType: "Currency", hasCurrencyDetails: true },
     { itemType: "DivinationCard", hasCurrencyDetails: false },
     { itemType: "Prophecy", hasCurrencyDetails: false },
     { itemType: "SkillGem", hasCurrencyDetails: false },
@@ -51,23 +51,24 @@ class PoeNinjaScraper implements Etl {
     logger.info(`Finished downloading PoeNinja mapping = ${mapping.itemType}`)
   }
 
+  /**
+   * The logic for Currency and fragments are very wonky.
+   *
+   * This is understandable from the poe.ninja's website design.
+   * So we are 2nd class citizens here.
+   * For instance: currency details dont complement with fragments here.
+   * So fragments should not have their information merged.
+   * We will use the name for the id for both.
+   * But currency will use the generated ID poe.ninja provides.
+   *
+   * "sparkline" for currency items and "sparkLine" for other items.
+   * Notice the difference in "L" camel casing vs all lowercase.
+   */
   private async downloadPoeNinjaWithCurrencyDetails(url: string, source: string) {
     try {
       const response = await axios.get<PoeNinjaWithCurrencyDetailsResponse>(url);
-      const currencyDetails = response.data.currencyDetails;
-      for (let i = 0; i < currencyDetails.length; ++i) {
-        const currency = currencyDetails[i];
-        const name = currency.name;
-        const imageUrl = this.getBaseImageUrl(currency.icon);
 
-        const poeNinjaItem: PoeNinjaItem = {
-          id: name,
-          source,
-          imageUrl: imageUrl,
-          isCurrency: true,
-        }
-        await elasticSearchStore.store("items", poeNinjaItem);
-      }
+      const allCurrencies = {};
 
       const lines = response.data.lines;
       for (let i = 0; i < lines.length; ++i) {
@@ -77,30 +78,57 @@ class PoeNinjaScraper implements Etl {
         if (line.pay) {
           pay = line.pay.value;
         }
-        let paySparkline: number[] | undefined = undefined;
-        if (line.paySparkline) {
-          paySparkline = line.paySparkline.data;
+        let paySparkLine: number[] | undefined = undefined;
+        if (line.paySparkLine) {
+          paySparkLine = line.paySparkLine.data;
         }
         let receive: number | undefined = undefined;
         if (line.receive) {
           receive = line.receive.value;
         }
-        let receiveSparkline: number[] | undefined = undefined;
-        if (line.receiveSparkline) {
-          receiveSparkline = line.receiveSparkline.data;
+        let receiveSparkLine: number[] | undefined = undefined;
+        if (line.receiveSparkLine) {
+          receiveSparkLine = line.receiveSparkLine.data;
         }
         const poeNinjaItem: PoeNinjaItem = {
-          id: name,
           source,
           name,
           pay,
-          paySparkline,
+          paySparkline: paySparkLine,
           receive,
-          receiveSparkline,
+          receiveSparkline: receiveSparkLine,
           chaosValue: line.chaosEquivalent,
           isCurrency: true,
         };
-        await elasticSearchStore.store("items", poeNinjaItem);
+        allCurrencies[name] = poeNinjaItem;
+      }
+
+      const currencyDetails = response.data.currencyDetails;
+      for (let i = 0; i < currencyDetails.length; ++i) {
+        const currency = currencyDetails[i];
+        const name = currency.name;
+        const imageUrl = this.getBaseImageUrl(currency.icon);
+        const poeNinjaItem: PoeNinjaItem = {
+          id: name,
+          name,
+          source,
+          imageUrl: imageUrl,
+          isCurrency: true,
+        }
+
+        // IMPORTANT
+        // We do not replace currency data if thats the case.
+        if (name in allCurrencies) {
+          allCurrencies[name] = {
+            ...allCurrencies[name],
+            ...poeNinjaItem,
+          }
+        }
+      }
+
+
+      for (let key in allCurrencies) {
+        await elasticSearchStore.store("items", allCurrencies[key]);
       }
     } catch (error) {
       logger.error(error.message)
