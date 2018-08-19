@@ -111,6 +111,13 @@ function MiscInformation(props: MiscInformationProps) {
         <h6>{linkedText}</h6>
       </Col>
     );
+  } else if (source === "DivinationCard") {
+    const stackSize = props.stackSize;
+    return (
+      <Col className="center" ms="3">
+        <h6>Stack Size: {stackSize}</h6>
+      </Col>
+    );
   }
   return (
     <Col className="center" ms="3"/>

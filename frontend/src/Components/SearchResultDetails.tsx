@@ -13,7 +13,21 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
     const size = "12vw";
     const implicit = item.implicit ? item.implicit.length > 0 ? item.implicit : null : null;
     const explicit = item.explicit ? item.explicit.length > 0 ? item.explicit : null : null;
-    const flavourText = item.flavourText === "" ? null : item.flavourText;
+
+    // Theres a hidden \r inside
+    let flavourText = item.flavourText === "" 
+        && item.flavourText.replace(/\r/g, "") ? null
+        : item.flavourText.replace(/\r/g, "");
+
+    if (typeof flavourText === "string") {
+      const flavourTextMatch = flavourText.match(/\{(.*?)\}/g);
+      if (flavourTextMatch !== null) {
+        flavourText = flavourTextMatch[0]
+          .replace("{", "")
+          .replace("}", "");
+      }
+    }
+
 
     // Divination Card logic
     return (
@@ -30,7 +44,11 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
           <p className={`mod-text default-margin-bottom ${implicit ? null : "implicit-border"}`} key={item.id + line}>{line}</p>) : null}
         {explicit ? <hr className="line-break-item hr-margin"/> : null}
         {flavourText ? flavourText.split("|").map((line) =>
-          <p className={`flavour-text default-margin-bottom ${!implicit && !explicit ? "implicit-border" : null}`} key={item.id + line}>{line}</p>) : null}
+          <p
+            className={`flavour-text default-margin-bottom ${!implicit && !explicit ? "implicit-border" : null}`}
+            key={item.id + line}>
+            {line}
+            </p>) : null}
         {item.flavourText ? <hr className="line-break-item hr-margin"/> : null}
         <CardImg
           style={{

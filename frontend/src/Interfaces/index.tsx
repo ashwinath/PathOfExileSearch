@@ -76,6 +76,7 @@ interface SearchResultListItem {
   corrupted?: boolean;
   gemLevel?: number;
   gemQuality?: number;
+  stackSize?: number;
 }
 
 interface MiscInformationProps {
@@ -83,6 +84,7 @@ interface MiscInformationProps {
   gemLevel?: number;
   gemQuality?: number;
   source: string;
+  stackSize?: number;
 }
 
 interface SearchResultDetailsProps {

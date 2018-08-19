@@ -21,6 +21,7 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
         corrupted: item.corrupted,
         gemLevel: item.gemLevel,
         gemQuality: item.gemQuality,
+        stackSize: item.stackSize
       }
     });
     return (
