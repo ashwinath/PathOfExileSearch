@@ -40,7 +40,7 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
       corrupted,
       id,
     } = this.props.data;
-    const size = "65px";
+    const size = "4vw";
     const base = baseType ? baseType : mapSourceToName(source);
 
     return (

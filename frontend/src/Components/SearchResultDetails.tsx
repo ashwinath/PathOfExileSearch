@@ -13,7 +13,7 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
       );
     }
 
-    const size = "20vh";
+    const size = "12vw";
     return (
       <Row
         className="d-flex align-items-center center item-details">
