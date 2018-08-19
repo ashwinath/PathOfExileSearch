@@ -20,18 +20,18 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
     return (
       <div className="center item-details">
         <div className="title-header">
-          <p className="header-text">{item.name}</p>
-          <p className="header-text">{item.baseType}</p>
+          <p className="header-text default-margin-bottom">{item.name}</p>
+          <p className="header-text default-margin-bottom">{item.baseType}</p>
         </div>
         {implicit ? implicit.map((line) =>
-          <p className="mod-text implicit-border" key={item.id + line}>{line}</p>) : null}
-        {implicit ? <hr className="line-break-item"/> : null}
+          <p className="mod-text implicit-border default-margin-bottom" key={item.id + line}>{line}</p>) : null}
+        {implicit ? <hr className="line-break-item hr-margin"/> : null}
         {explicit ? explicit.map((line) =>
-          <p className="mod-text" key={item.id + line}>{line}</p>) : null}
-        {explicit ? <hr className="line-break-item"/> : null}
+          <p className={`mod-text default-margin-bottom ${implicit ? null : "implicit-border"}`} key={item.id + line}>{line}</p>) : null}
+        {explicit ? <hr className="line-break-item hr-margin"/> : null}
         {flavourText ? flavourText.split("|").map((line) =>
-          <p className="flavour-text" key={item.id + line}>{line}</p>) : null}
-        {item.flavourText ? <hr className="line-break-item"/> : null}
+          <p className="flavour-text default-margin-bottom" key={item.id + line}>{line}</p>) : null}
+        {item.flavourText ? <hr className="line-break-item hr-margin"/> : null}
         <CardImg
           style={{
             maxHeight: size,

@@ -4,10 +4,17 @@
   margin-top: 10px;
 }
 
+.default-margin-bottom {
+  margin-bottom: 0.2rem;
+}
+
+.hr-margin {
+  margin: 0.5rem;
+}
+
 .header-text {
   color: #af6025;
-  font-size: 25px;
-  margin-bottom: 0;
+  font-size: 20px;
 }
 
 .mod-text {
@@ -30,7 +37,7 @@
 }
 
 .implicit-border {
-  padding-top: 15px;
+  padding-top: 0.2rem;
 }
 
 .line-break-item { 
