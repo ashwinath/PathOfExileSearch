@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   Input,
   InputGroup,
-  InputGroupAddon,
 } from "reactstrap";
 import {
   SearchFormProps,
@@ -21,8 +20,11 @@ class SearchForm extends React.Component<SearchFormProps, {}> {
     return (
       <div>
         <InputGroup size="lg">
-          <InputGroupAddon addonType="prepend">Search anything</InputGroupAddon>
           <Input type="text"
+            style={{
+              background: "#707070",
+              color: "#E5DFC5",
+            }}
             name="search-mods"
             id="search-mods"
             placeholder="Search names, mods, item types, flavour texts..."

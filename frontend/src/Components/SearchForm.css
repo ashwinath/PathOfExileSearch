@@ -1,3 +1,11 @@
 .form-label-search {
   padding-right: 5px;
 }
+
+#search-mods::placeholder {
+  color: #E5DFC5;
+}
+
+#search-mods input[type=text] {
+  color: white;
+}
