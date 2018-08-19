@@ -1,3 +1,45 @@
 .item-details {
-  padding-top: 10px;
+  background: #000;
+  border: 3px solid #85432a;
+  margin-top: 10px;
+}
+
+.header-text {
+  color: #af6025;
+  font-size: 25px;
+  margin-bottom: 0;
+}
+
+.mod-text {
+  color: #7788ff;
+}
+
+.flavour-text {
+  color: #af6025;
+  font-style: italic;
+}
+
+.title-header {
+  background: #21140d;
+  padding-top: 5px;
+  border: 1px solid #643017;
+}
+
+.mod-text, .flavour-text {
+  font-size: 15px;
+}
+
+.implicit-border {
+  padding-top: 15px;
+}
+
+.line-break-item { 
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(133, 67, 42, 0),
+    rgba(133, 67, 42, 5),
+    rgba(133, 67, 42, 0)
+  );
 }

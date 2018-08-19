@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Row, Col, CardImg } from "reactstrap";
+import { CardImg } from "reactstrap";
 import { SearchResultDetailsProps } from "../Interfaces";
 import "./SearchResultDetails.css";
 
@@ -14,29 +14,38 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
     }
 
     const size = "12vw";
+    const implicit = item.implicit ? item.implicit.length > 0 ? item.implicit : null : null;
+    const explicit = item.explicit ? item.explicit.length > 0 ? item.explicit : null : null;
+    const flavourText = item.flavourText === "" ? null : item.flavourText;
     return (
-      <Row
-        className="d-flex align-items-center center item-details">
-        <Col xs="6" md="12">
-          <CardImg
-            style={{
-              maxHeight: size,
-              maxWidth: size,
-              height: size,
-              width: "auto",
-            }}
-            top={true}
-            src={item.imageUrl}/>
-        </Col>
-        <Col xs="6" md="12">
-          <h2>{item.name}</h2>
-          {item.implicit ? item.implicit.map((line) => <p key={item.id + line}>{line}</p>) : null}
-          {item.explicit ? item.explicit.map((line) => <p key={item.id + line}>{line}</p>) : null}
-        </Col>
-      </Row>
+      <div className="center item-details">
+        <div className="title-header">
+          <p className="header-text">{item.name}</p>
+          <p className="header-text">{item.baseType}</p>
+        </div>
+        {implicit ? implicit.map((line) =>
+          <p className="mod-text implicit-border" key={item.id + line}>{line}</p>) : null}
+        {implicit ? <hr className="line-break-item"/> : null}
+        {explicit ? explicit.map((line) =>
+          <p className="mod-text" key={item.id + line}>{line}</p>) : null}
+        {explicit ? <hr className="line-break-item"/> : null}
+        {flavourText ? flavourText.split("|").map((line) =>
+          <p className="flavour-text" key={item.id + line}>{line}</p>) : null}
+        {item.flavourText ? <hr className="line-break-item"/> : null}
+        <CardImg
+          style={{
+            maxHeight: size,
+            maxWidth: size,
+            height: size,
+            width: "auto",
+          }}
+          top={true}
+          src={item.imageUrl}/>
+      </div>
     );
   }
 }
+
 
 function mapStateToProps(state) {
   return {

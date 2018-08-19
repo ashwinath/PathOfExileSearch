@@ -25,10 +25,10 @@ class SearchItemsResults extends React.Component<SearchItemsResultsProps, Search
     });
     return (
       <Row>
-        <Col md="8">
+        <Col md="9">
           <SearchResultList searchResultsList={searchResultsList}/>
         </Col>
-        <Col md="4">
+        <Col md="3">
           <SearchResultDetails/>
         </Col>
       </Row>
