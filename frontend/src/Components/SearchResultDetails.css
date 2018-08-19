@@ -50,3 +50,27 @@
     rgba(133, 67, 42, 0)
   );
 }
+
+.divination-card-divination-card {
+  color: #b1fcf8;
+}
+
+.divination-card-whiteitem {
+  color: #c8c8c2;
+}
+
+.divination-card-uniqueitem {
+  color: #aa6025;
+}
+
+.divination-card-corrupted {
+  color: #d20007;
+}
+
+.divination-card-currencyitem {
+  color: #aa9e64;
+}
+
+.divination-card-default {
+  color: #6e7f7f;
+}
