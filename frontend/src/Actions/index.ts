@@ -30,6 +30,11 @@ function searchServer(searchKey: string, dispatch: Dispatch) {
       }
     }).then(response => {
       dispatch(receiveResults(response.data.data));
+
+      // Always load first result to details
+      if (response.data.data.length > 0) {
+        dispatch(selectItem(response.data.data[0].id))
+      }
     });
   } catch (error) {
     console.error(error.message);
