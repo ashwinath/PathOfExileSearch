@@ -11,14 +11,15 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
       return null;
     }
     const size = "12vw";
-    const implicit = item.implicit ? item.implicit.length > 0 ? item.implicit : null : null;
-    const explicit = item.explicit ? item.explicit.length > 0 ? item.explicit : null : null;
+    const implicit = item.implicit && item.implicit.length > 0 ? item.implicit : null;
+    const explicit = item.explicit && item.explicit.length > 0 ? item.explicit : null;
 
     // Theres a hidden \r inside
-    let flavourText = item.flavourText === "" 
-        && item.flavourText.replace(/\r/g, "") ? item.flavourText.replace(/\r/g, "")
+    let flavourText = item.flavourText && item.flavourText !== "" && item.flavourText.replace(/\r/g, "") 
+        ? item.flavourText.replace(/\r/g, "")
         : null;
 
+    console.log(item.flavourText)
     if (typeof flavourText === "string") {
       const flavourTextMatch = flavourText.match(/\{(.*?)\}/g);
       if (flavourTextMatch !== null) {
@@ -27,7 +28,6 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
           .replace("}", "");
       }
     }
-
 
     // Divination Card logic
     return (
