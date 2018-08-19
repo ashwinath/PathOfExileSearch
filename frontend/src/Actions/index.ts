@@ -12,14 +12,14 @@ function search(searchKey: string) {
   return {
     type: "SEARCH",
     searchKey,
-  }
+  };
 }
 
 function receiveResults(poeItems: PoeNinjaItem[]) {
   return {
     type: "RECEIVE_SEARCH_RESULTS",
     poeItems,
-  }
+  };
 }
 
 function searchServer(searchKey: string, dispatch: Dispatch) {
@@ -36,4 +36,11 @@ function searchServer(searchKey: string, dispatch: Dispatch) {
   }
 }
 
-export { search, searchServer, init };
+function selectItem(id: string) {
+  return {
+    type: "SELECT_ITEM",
+    id,
+  };
+}
+
+export { search, searchServer, init, selectItem };

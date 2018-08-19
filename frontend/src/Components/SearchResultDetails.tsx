@@ -1,25 +1,47 @@
 import * as React from "react";
-import { SearchResultDetailsProps, SearchResultDetailsState } from "../Interfaces";
+import { connect } from "react-redux";
+import { Row, Col, CardImg } from "reactstrap";
+import { SearchResultDetailsProps } from "../Interfaces";
+import "./SearchResultDetails.css";
 
-class SearchResultDetails extends React.Component<SearchResultDetailsProps, SearchResultDetailsState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      item: this.props.item,
-    };
-  }
-
+class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> {
   public render() {
-    const { item } = this.state;
+    const { item } = this.props;
     if (!item) {
       return (
-        <h1>Not implemented yet</h1>
+        <h1>Click on an item to find out more</h1>
       );
     }
+
+    const size = "20vh";
     return (
-      <h1>{item.id}</h1>
+      <Row
+        className="d-flex align-items-center center item-details">
+        <Col xs="6" md="12">
+          <CardImg
+            style={{
+              maxHeight: size,
+              maxWidth: size,
+              height: size,
+              width: "auto",
+            }}
+            top={true}
+            src={item.imageUrl}/>
+        </Col>
+        <Col xs="6" md="12">
+          <h2>{item.name}</h2>
+          {item.implicit ? item.implicit.map((line) => <p key={item.id + line}>{line}</p>) : null}
+          {item.explicit ? item.explicit.map((line) => <p key={item.id + line}>{line}</p>) : null}
+        </Col>
+      </Row>
     );
   }
 }
 
-export default SearchResultDetails;
+function mapStateToProps(state) {
+  return {
+    item: state.search.clickedItem,
+  }
+}
+
+export default connect(mapStateToProps)(SearchResultDetails);

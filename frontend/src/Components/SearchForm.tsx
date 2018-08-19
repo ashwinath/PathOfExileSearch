@@ -43,7 +43,7 @@ class SearchForm extends React.Component<SearchFormProps, {}> {
 
 function mapStateToProps(state) {
   return {
-    searchKey: state.searchKey,
+    searchKey: state.search.search,
   };
 }
 

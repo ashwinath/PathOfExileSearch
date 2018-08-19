@@ -59,6 +59,11 @@ interface SearchResultListProps {
   searchResultsList: SearchResultListItem[];
 }
 
+interface SearchResultItemProps {
+  data: SearchResultListItem;
+  dispatch: Dispatch;
+}
+
 interface SearchResultListItem {
   id: string;
   name: string;
@@ -82,15 +87,11 @@ interface MiscInformationProps {
 
 interface SearchResultDetailsProps {
   item?: PoeNinjaItem;
-}
-
-interface SearchResultDetailsState {
-  item?: PoeNinjaItem;
+  dispatch: Dispatch;
 }
 
 export {
   SearchResultDetailsProps,
-  SearchResultDetailsState,
   NavigationState,
   SearchResultsState,
   SearchItemsResultsProps,
@@ -100,4 +101,5 @@ export {
   SearchResultListProps,
   SearchResultListItem,
   MiscInformationProps,
+  SearchResultItemProps,
 };

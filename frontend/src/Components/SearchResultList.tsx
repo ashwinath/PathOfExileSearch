@@ -1,11 +1,13 @@
 import * as React from "react";
 import {
   SearchResultListProps,
-  SearchResultListItem,
   MiscInformationProps,
+  SearchResultItemProps,
 } from "../Interfaces";
 import { mapSourceToName } from "../Utils/Mappers";
+import { connect } from "react-redux";
 import { Row, Col, CardImg } from "reactstrap";
+import { selectItem } from "../Actions";
 import "./SearchResultList.css";
 
 function SearchResultList(props: SearchResultListProps) {
@@ -13,16 +15,16 @@ function SearchResultList(props: SearchResultListProps) {
     <div className="result-list">
       {props.searchResultsList.map((item) => {
         return (
-          <SearchResultItem
+          <VisibleSearchResultItem
             key={"" + item.id + "result"}
-            {...item}/>
+            data={{...item}}/>
         )
       })}
     </div>
   )
 }
 
-class SearchResultItem extends React.Component<SearchResultListItem, {}> {
+class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
   constructor(props) {
     super(props);
   }
@@ -36,12 +38,16 @@ class SearchResultItem extends React.Component<SearchResultListItem, {}> {
       source,
       baseType,
       corrupted,
-    } = this.props;
+      id,
+    } = this.props.data;
     const size = "65px";
     const base = baseType ? baseType : mapSourceToName(source);
 
     return (
-      <Row className="d-flex align-items-center item-container">
+      <Row
+        onClick={this.onRowClick.bind(this, id)}
+        id={id}
+        className="d-flex align-items-center item-container item-hover">
         <Col className="center" ms="2">
           <CardImg
             style={{
@@ -59,7 +65,7 @@ class SearchResultItem extends React.Component<SearchResultListItem, {}> {
         <Col className="center" ms="2">
           <h6>{base}</h6>
         </Col>
-        <MiscInformation {...this.props} />
+        <MiscInformation {...this.props.data} />
         <Col className="center" ms="1">
           <h6>{corrupted ? "Corrupted": "Not corrupted"}</h6>
         </Col>
@@ -72,7 +78,14 @@ class SearchResultItem extends React.Component<SearchResultListItem, {}> {
       </Row>
     );
   }
+
+  private onRowClick(id) {
+    const { dispatch } = this.props;
+    dispatch(selectItem(id));
+  }
 }
+
+const VisibleSearchResultItem = connect()(SearchResultItem);
 
 function MiscInformation(props: MiscInformationProps) {
   const { source } = props;
