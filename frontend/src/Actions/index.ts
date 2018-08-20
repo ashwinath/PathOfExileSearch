@@ -33,7 +33,9 @@ function searchServer(searchKey: string, dispatch: Dispatch) {
 
       // Always load first result to details
       if (response.data.data.length > 0) {
-        dispatch(selectItem(response.data.data[0].id))
+        dispatch(selectItem(response.data.data[0].id));
+      } else {
+        dispatch(selectItem(null));
       }
     });
   } catch (error) {

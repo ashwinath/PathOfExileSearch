@@ -19,7 +19,6 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
         ? item.flavourText.replace(/\r/g, "")
         : null;
 
-    console.log(item.flavourText)
     if (typeof flavourText === "string") {
       const flavourTextMatch = flavourText.match(/\{(.*?)\}/g);
       if (flavourTextMatch !== null) {
