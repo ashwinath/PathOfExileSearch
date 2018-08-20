@@ -28,7 +28,6 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
       }
     }
 
-    // Divination Card logic
     return (
       <div className="center item-details">
         <div className="title-header">
@@ -61,7 +60,6 @@ class SearchResultDetails extends React.Component<SearchResultDetailsProps, {}> 
       </div>
     );
   }
-
 }
 
 interface DivinationCardExplictProps {

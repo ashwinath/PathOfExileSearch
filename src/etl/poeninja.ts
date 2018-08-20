@@ -2,6 +2,7 @@ import moment from "moment";
 import axios from "axios";
 import elasticSearchStore from "../es";
 import logger from "../logger";
+import querystring from "querystring";
 import {
   Etl,
   PoeNinjaMappings,
@@ -194,7 +195,14 @@ class PoeNinjaScraper implements Etl {
   }
 
   private getBaseImageUrl(url: string) {
-    return url.split("?")[0].replace("http", "https");
+    const keysToDelete = ["scaleIndex", "w", "h"];
+    const imageQueryString = querystring.parse(url.split("?")[1]);
+    for (let key of keysToDelete) {
+      if (key in imageQueryString) {
+        delete imageQueryString[key];
+      }
+    }
+    return url.replace("http", "https") + querystring.stringify(imageQueryString);
   }
 
   private generateUrl(itemType: string, currency: boolean) {
