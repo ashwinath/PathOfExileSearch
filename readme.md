@@ -7,7 +7,8 @@ Search for keywords throughout the item database. Anything you wanna search for.
 
 ## Acknowledgements
 
-Thanks [exljbris Font Fountry](https://www.exljbris.com/fontin.html) for the fonts.
+Thanks [exljbris Font Foundry](https://www.exljbris.com/fontin.html) for the fonts.
+
 Thanks [PoeNinja](http://poe.ninja) for the API.
 
 
