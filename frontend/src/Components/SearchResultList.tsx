@@ -124,4 +124,27 @@ function MiscInformation(props: MiscInformationProps) {
   );
 }
 
-export default SearchResultList;
+function mapStateToProps(state) {
+  const poeItems = state.search.poeItems || [];
+  const searchResultsList = poeItems.map((item) => {
+    return {
+      id: item.id,
+      name: item.name,
+      imageUrl: item.imageUrl,
+      chaosValue: item.chaosValue,
+      exaltedValue: item.exaltedValue,
+      source: item.source,
+      links: item.links,
+      baseType: item.baseType,
+      corrupted: item.corrupted,
+      gemLevel: item.gemLevel,
+      gemQuality: item.gemQuality,
+      stackSize: item.stackSize
+    }
+  });
+  return {
+    searchResultsList,
+  };
+}
+
+export default connect(mapStateToProps)(SearchResultList);
