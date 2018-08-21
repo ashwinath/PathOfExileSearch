@@ -11,7 +11,30 @@ function GenericUnique(props: SearchResultDetailsProps) {
   if (!item) {
     return null;
   }
-  const size = "12vw";
+
+  let size = "12vw";
+  let styles = {
+    maxHeight: size,
+    maxWidth: size,
+    height: size,
+    width: "auto",
+  }
+  switch(item.source) {
+    case "UniqueFlask":
+      size = "9vw";
+      break;
+    case "UniqueAccessory":
+      size =" 6vw";
+      styles = {
+        maxHeight: size,
+        maxWidth: size,
+        height: "auto",
+        width: "100%",
+      }
+      break;
+    default:
+      break;
+  }
   const implicit = item.implicit && item.implicit.length > 0 ? item.implicit : null;
   const explicit = item.explicit && item.explicit.length > 0 ? item.explicit : null;
 
@@ -37,12 +60,7 @@ function GenericUnique(props: SearchResultDetailsProps) {
           </p>) : null}
       {item.flavourText ? <hr className="line-break-item hr-margin"/> : null}
       <CardImg
-        style={{
-          maxHeight: size,
-          maxWidth: size,
-          height: size,
-          width: "auto",
-        }}
+        style={styles}
         top={true}
         src={item.imageUrl}/>
     </div>

@@ -43,6 +43,22 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
     const size = "4vw";
     const base = baseType ? baseType : mapSourceToName(source);
 
+    let styles = {
+      maxHeight: size,
+      maxWidth: size,
+      height: size,
+      width: "auto",
+    };
+
+    if (source === "UniqueAccessory") {
+      styles = {
+        maxHeight: size,
+        maxWidth: size,
+        height: "auto",
+        width: "100%",
+      };
+    }
+
     return (
       <Row
         onClick={this.onRowClick.bind(this, id)}
@@ -50,12 +66,7 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
         className="d-flex align-items-center item-container item-hover">
         <Col className="center" ms="2">
           <CardImg
-            style={{
-              maxHeight: size,
-              maxWidth: size,
-              height: size,
-              width: "auto",
-            }}
+            style={styles}
             top={true}
             src={imageUrl}/>
         </Col>
