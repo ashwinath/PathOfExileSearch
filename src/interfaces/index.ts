@@ -81,6 +81,7 @@ interface PoeNinjaDefaultLines {
   gemQuality: number;
   itemType: string;
   links?: number;
+  artFilename?: string;
 }
 
 interface ModifierType {
@@ -144,6 +145,7 @@ interface PoeNinjaItem extends EsItem {
   chaosValue?: number;
   exaltedValue?: number;
   links?: number;
+  artFilename?: string;
 }
 
 interface Etl {

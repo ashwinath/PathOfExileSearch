@@ -49,6 +49,7 @@ interface PoeNinjaItem extends EsItem {
   chaosValue: number;
   exaltedValue: number;
   links?: number;
+  artFilename?: string;
 }
 
 interface NavigationState {

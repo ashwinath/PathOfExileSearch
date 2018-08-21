@@ -4,39 +4,43 @@ import { SearchResultDetailsProps } from "../../Interfaces";
 import { mapStateToProps } from "./ReduxMapper";
 import { sanitiseFlavourText } from "./Utils";
 import { CardImg } from "reactstrap";
-import "./GenericUnique.css";
+import "./Cards.css";
 
 function DivinationCard(props: SearchResultDetailsProps) {
   const { item } = props;
   const explicit = item.explicit && item.explicit.length > 0 ? item.explicit : null;
   const flavourText = sanitiseFlavourText(item.flavourText || "");
-  const size = "12vw";
   return (
-    <div className="center item-details">
-      <div className="title-header">
-        <p className="header-text default-margin-bottom">{item.name}</p>
-        <p className="header-text default-margin-bottom">{item.baseType}</p>
+    <div className="center divination-item-details">
+      <div className="divination-title-header">
+        <p className="divination-header-text default-margin-bottom">{item.name}</p>
       </div>
-      {explicit ? explicit.map((line) => <DivinationCardExplict key={Math.random()} explicit={line}/>) : null}
-      {explicit ? <hr className="line-break-item hr-margin"/> : null}
-      {flavourText ? flavourText.split("|").map((line) =>
-        <p
-          className={`flavour-text default-margin-bottom ${!explicit ? "implicit-border" : null}`}
-          key={item.id + line}>
-          {line}
-          </p>) : null}
-      {item.flavourText ? <hr className="line-break-item hr-margin"/> : null}
       <CardImg
         style={{
-          maxHeight: size,
-          maxWidth: size,
-          height: size,
-          width: "auto",
+          height: "auto",
+          width: "100%",
         }}
         top={true}
-        src={item.imageUrl}/>
+        src={generateUrl(item.artFilename)}/>
+      <div className="divination-card-explicit">
+        {explicit ? explicit.map((line) =>
+          <DivinationCardExplict key={Math.random()} explicit={line}/>) : null}
+      </div>
+      <hr className="line-break-item hr-margin"/>
+      <div className="divination-card-flavour-text-gap">
+        {flavourText ? flavourText.split("|").map((line) =>
+          <p
+            className={`flavour-text default-margin-bottom ${!explicit ? "implicit-border" : null}`}
+            key={item.id + line}>
+            {line}
+            </p>) : null}
+      </div>
     </div>
   );
+}
+
+function generateUrl(artFileName: string) {
+  return `http://web.poecdn.com/image/gen/divination_cards/${artFileName}.png`
 }
 
 interface DivinationCardExplictProps {

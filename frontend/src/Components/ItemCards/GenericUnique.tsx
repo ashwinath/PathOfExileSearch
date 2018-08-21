@@ -4,7 +4,7 @@ import { CardImg } from "reactstrap";
 import { SearchResultDetailsProps } from "../../Interfaces";
 import { mapStateToProps } from "./ReduxMapper";
 import { sanitiseFlavourText } from "./Utils";
-import "./GenericUnique.css";
+import "./Cards.css";
 
 function GenericUnique(props: SearchResultDetailsProps) {
   const { item } = props;
