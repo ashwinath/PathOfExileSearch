@@ -40,7 +40,7 @@ function DivinationCard(props: SearchResultDetailsProps) {
 }
 
 function generateUrl(artFileName: string) {
-  return `http://web.poecdn.com/image/gen/divination_cards/${artFileName}.png`
+  return `https://web.poecdn.com/image/gen/divination_cards/${artFileName}.png`
 }
 
 interface DivinationCardExplictProps {
