@@ -27,6 +27,7 @@ function searchServer(searchKey: string, dispatch: Dispatch) {
     axios.get<SearchItemResult>("/-/items/search", {
       params: {
         search: searchKey,
+        itemLimit: 10,
       }
     }).then(response => {
       dispatch(receiveResults(response.data.data));

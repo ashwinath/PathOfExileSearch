@@ -78,6 +78,7 @@ class ElasticSearchStore {
     try {
       const response = await this.es.search<PoeNinjaItem>({
         index,
+        size: itemCount,
         body: {
           sort: [
             "_score",
