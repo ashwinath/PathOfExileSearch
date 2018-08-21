@@ -2,6 +2,7 @@ import * as React from "react";
 import GenericUnique from "./ItemCards/GenericUnique";
 import Essence from "./ItemCards/Essence";
 import DivinationCard from "./ItemCards/DivinationCard";
+import Prophecy from "./ItemCards/Prophecy"
 import { connect } from "react-redux";
 
 interface DetailsProps {
@@ -11,17 +12,13 @@ interface DetailsProps {
 function SearchResultDetails(props: DetailsProps) {
   switch(props.source) {
     case "DivinationCard":
-      return (
-        <DivinationCard />
-      );
+      return (<DivinationCard />);
     case "Essence":
-      return (
-        <Essence />
-      );
+      return (<Essence />);
+    case "Prophecy":
+      return (<Prophecy />);
     default:
-      return (
-        <GenericUnique />
-      );
+      return (<GenericUnique />);
   }
 }
 

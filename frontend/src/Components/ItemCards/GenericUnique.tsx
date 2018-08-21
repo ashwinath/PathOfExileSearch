@@ -47,14 +47,14 @@ function GenericUnique(props: SearchResultDetailsProps) {
         <p className="header-text default-margin-bottom">{item.baseType}</p>
       </div>
       {implicit ? implicit.map((line) =>
-        <p className="mod-text implicit-border default-margin-bottom" key={item.id + line}>{line}</p>) : null}
+        <p className="item-mod-text mod-text implicit-border default-margin-bottom" key={item.id + line}>{line}</p>) : null}
       {implicit ? <hr className="line-break-item hr-margin"/> : null}
       {explicit ? explicit.map((line) =>
-        <p className={`mod-text default-margin-bottom ${implicit ? null : "implicit-border"}`} key={item.id + line}>{line}</p>) : null}
+        <p className={`item-mod-text mod-text default-margin-bottom ${implicit ? null : "implicit-border"}`} key={item.id + line}>{line}</p>) : null}
       {explicit ? <hr className="line-break-item hr-margin"/> : null}
       {flavourText ? flavourText.split("|").map((line) =>
         <p
-          className={`flavour-text default-margin-bottom ${!implicit && !explicit ? "implicit-border" : null}`}
+          className={`item-mod-text flavour-text default-margin-bottom ${!implicit && !explicit ? "implicit-border" : null}`}
           key={item.id + line}>
           {line}
           </p>) : null}

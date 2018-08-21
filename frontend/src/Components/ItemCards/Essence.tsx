@@ -24,7 +24,7 @@ function Essence(props: SearchResultDetailsProps) {
       </div>
       <hr className="line-break-item hr-margin"/>
       {item.explicit.map((line) =>
-        <p className="mod-text default-margin-bottom" key={item.id + line}>{line}</p>)}
+        <p className="item-mod-text mod-text default-margin-bottom" key={item.id + line}>{line}</p>)}
       <hr className="line-break-item hr-margin"/>
       <CardImg
         style={{

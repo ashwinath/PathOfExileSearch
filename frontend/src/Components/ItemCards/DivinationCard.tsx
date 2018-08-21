@@ -30,7 +30,7 @@ function DivinationCard(props: SearchResultDetailsProps) {
       <div className="divination-card-flavour-text-gap">
         {flavourText ? flavourText.split("|").map((line) =>
           <p
-            className={`flavour-text default-margin-bottom ${!explicit ? "implicit-border" : null}`}
+            className={`item-mod-text flavour-text default-margin-bottom ${!explicit ? "implicit-border" : null}`}
             key={item.id + line}>
             {line}
             </p>) : null}
@@ -90,7 +90,9 @@ function DivinationCardExplict(props: DivinationCardExplictProps) {
         break;
     }
     return (
-      <p className={`default-margin-bottom implicit-border ${cssName}`}>{text}{secondText}</p>
+      <p className={`item-mod-text default-margin-bottom implicit-border ${cssName}`}>
+        {text}{secondText}
+      </p>
     );
   }
 

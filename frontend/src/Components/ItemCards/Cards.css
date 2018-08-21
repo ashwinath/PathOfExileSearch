@@ -119,8 +119,7 @@
 
 .essence-header-text {
   color: #aa9e82;
-  font-size: 20px;
-}
+  font-size: 20px; }
 
 .essence-title-header {
   background: #302a1a;
@@ -131,5 +130,32 @@
 .essence-item-details {
   background: #000;
   border: 3px solid #877248;
+  margin-top: 10px;
+}
+
+.prophecy-text {
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.item-mod-text {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.prophecy-header-text {
+  color: #b54bff;
+  font-size: 20px;
+}
+
+.prophecy-title-header {
+  background: #301b46;
+  padding-top: 5px;
+  border: 1px solid ##721393;
+}
+
+.prophecy-item-details {
+  background: #000;
+  border: 3px solid #b54bff;
   margin-top: 10px;
 }
