@@ -45,7 +45,7 @@
 
 .line-break-item { 
   border: 0;
-  height: 1px;
+  height: 2px;
   background-image: linear-gradient(
     to right,
     rgba(133, 67, 42, 0),
@@ -133,9 +133,15 @@
   margin-top: 10px;
 }
 
-.prophecy-text {
-  font-size: 15px;
-  color: #ffffff;
+.essence-line-break-item { 
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(
+    to right,
+    rgba(170, 158, 130, 0),
+    rgba(170, 158, 130, 5),
+    rgba(170, 158, 130, 0)
+  );
 }
 
 .item-mod-text {
@@ -158,4 +164,48 @@
   background: #000;
   border: 3px solid #b54bff;
   margin-top: 10px;
+}
+
+.prophecy-line-break-item { 
+  border: 0;
+  height: 3px;
+  background-image: linear-gradient(
+    to right,
+    rgba(129, 42, 118, 0),
+    rgba(129, 42, 118, 5),
+    rgba(129, 42, 118, 0)
+  );
+}
+
+.prophecy-text {
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.map-header-text {
+  color: #c8c8c8;
+  font-size: 20px;
+}
+
+.map-title-header {
+  background: #55514f;
+  padding-top: 5px;
+  border: 1px solid #7f7f7f;
+}
+
+.map-item-details {
+  background: #000;
+  border: 3px solid #c8c8c8;
+  margin-top: 10px;
+}
+
+.map-line-break-item { 
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(
+    to right,
+    rgba(80, 68, 55, 0),
+    rgba(80, 68, 55, 5),
+    rgba(80, 68, 55, 0)
+  );
 }

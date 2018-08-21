@@ -6,26 +6,25 @@ import { CardImg } from "reactstrap";
 import ImplicitKeyValue from "./ImplicitKeyValue";
 import "./Cards.css";
 
-function Essence(props: SearchResultDetailsProps) {
+const BASE_MAP_LEVEL = 67;
+
+function Map(props: SearchResultDetailsProps) {
   const { item } = props;
-  const size = "5vw";
+  const size = "4vw";
   return (
-    <div className="center essence-item-details">
-      <div className="essence-title-header">
-        <p className="essence-header-text default-margin-bottom">{item.name}</p>
+    <div className="center map-item-details">
+      <div className="map-title-header">
+        <p className="map-header-text default-margin-bottom">{item.name}</p>
       </div>
       <div className="implicit-border">
         <ImplicitKeyValue
-          implicitKey={"Stack Size"}
-          implicitValue={item.stackSize} />
+          implicitKey={"Map Level"}
+          implicitValue={BASE_MAP_LEVEL + item.mapTier} />
         <ImplicitKeyValue
-          implicitKey={"Essence Level"}
+          implicitKey={"Map Tier"}
           implicitValue={item.mapTier} />
       </div>
-      <hr className="essence-line-break-item hr-margin"/>
-      {item.explicit.map((line) =>
-        <p className="item-mod-text mod-text default-margin-bottom" key={item.id + line}>{line}</p>)}
-      <hr className="essence-line-break-item hr-margin"/>
+      <hr className="map-line-break-item hr-margin"/>
       <CardImg
         style={{
           maxHeight: size,
@@ -39,4 +38,5 @@ function Essence(props: SearchResultDetailsProps) {
   )
 }
 
-export default connect(mapStateToProps)(Essence);
+export default connect(mapStateToProps)(Map);
+

@@ -27,9 +27,9 @@ function Prophecy(props: SearchResultDetailsProps) {
           key={item.id + line}>
           {line}
           </p>) : null}
-      <hr className="line-break-item hr-margin"/>
+      <hr className="prophecy-line-break-item hr-margin"/>
       <p className="item-mod-text prophecy-text">{item.prophecyText}</p>
-      <hr className="line-break-item hr-margin"/>
+      <hr className="prophecy-line-break-item hr-margin"/>
       <CardImg
         style={styles}
         top={true}
