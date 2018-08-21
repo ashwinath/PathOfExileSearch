@@ -104,3 +104,32 @@
   color: #030301;
   font-size: 20px;
 }
+
+.essence-implicit {
+  margin-bottom: 0;
+}
+
+.implicit-key {
+  color: #7f7f7f;
+}
+
+.implicit-value {
+  color: #ffffff;
+}
+
+.essence-header-text {
+  color: #aa9e82;
+  font-size: 20px;
+}
+
+.essence-title-header {
+  background: #302a1a;
+  padding-top: 5px;
+  border: 1px solid #aa9e82;
+}
+
+.essence-item-details {
+  background: #000;
+  border: 3px solid #877248;
+  margin-top: 10px;
+}

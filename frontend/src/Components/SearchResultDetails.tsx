@@ -1,5 +1,6 @@
 import * as React from "react";
 import GenericUnique from "./ItemCards/GenericUnique";
+import Essence from "./ItemCards/Essence";
 import DivinationCard from "./ItemCards/DivinationCard";
 import { connect } from "react-redux";
 
@@ -12,6 +13,10 @@ function SearchResultDetails(props: DetailsProps) {
     case "DivinationCard":
       return (
         <DivinationCard />
+      );
+    case "Essence":
+      return (
+        <Essence />
       );
     default:
       return (
