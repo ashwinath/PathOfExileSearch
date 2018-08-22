@@ -7,6 +7,7 @@ import Map from "./ItemCards/Map";
 import UniqueMap from "./ItemCards/UniqueMap";
 import Currency from "./ItemCards/Currency";
 import Fragment from "./ItemCards/Fragment";
+import SkillGem from "./ItemCards/SkillGem";
 import { connect } from "react-redux";
 
 interface DetailsProps {
@@ -29,6 +30,10 @@ function SearchResultDetails(props: DetailsProps) {
       return (<UniqueMap />);
     case "Fragment":
       return (<Fragment />);
+    case "SkillGem":
+      /* Fall Through */
+    case "HelmetEnchant":
+      return (<SkillGem />);
     default:
       return (<GenericUnique />);
   }

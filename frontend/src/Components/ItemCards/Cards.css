@@ -209,3 +209,20 @@
     rgba(80, 68, 55, 0)
   );
 }
+
+.skill-gem-header-text {
+  color: #1aa29b;
+  font-size: 20px;
+}
+
+.skill-gem-title-header {
+  background: #163330;
+  padding-top: 5px;
+  border: 1px solid #394c44;
+}
+
+.skill-gem-item-details {
+  background: #000;
+  border: 3px solid #1aa29b;
+  margin-top: 10px;
+}
