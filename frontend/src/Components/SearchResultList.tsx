@@ -38,6 +38,7 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
       baseType,
       corrupted,
       id,
+      links,
     } = this.props.data;
     const size = "4vw";
     const base = baseType ? baseType : mapSourceToName(source);
@@ -61,7 +62,8 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
     const chaosTradeValue = (1/chaosValue).toFixed(2);
     const nameEscaped = name.replace(/\ /g, "_");
     const wikiLink = `https://pathofexile.gamepedia.com/${nameEscaped}`;
-    const poeTradeUrl = `http://poe.trade/search?league=${this.LEAGUE}&name=${name}`;
+    const linksIncluded = links !== 0 ? `&link_min=${links}&link_max=${links}` : null;
+    const poeTradeUrl = `http://poe.trade/search?league=${this.LEAGUE}&name=${name}${linksIncluded}`;
 
     return (
       <Row
