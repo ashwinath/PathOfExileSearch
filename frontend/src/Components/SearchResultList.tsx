@@ -68,7 +68,7 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
     const chaosTradeValue = (1/chaosValue).toFixed(2);
     const nameEscaped = name.replace(/\ /g, "_");
     const wikiLink = `https://pathofexile.gamepedia.com/${nameEscaped}`;
-    const linksIncluded = links !== 0 ? `&link_min=${links}&link_max=${links}` : null;
+    const linksIncluded = links !== 0 ? `&link_min=${links}&link_max=${links}` : "";
     const poeTradeUrl = `http://poe.trade/search?league=${this.LEAGUE}&name=${name}${linksIncluded}`;
 
     const sparklineToUse = sparkline ? sparkline : paySparkline;
