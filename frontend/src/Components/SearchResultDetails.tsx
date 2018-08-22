@@ -6,6 +6,7 @@ import Prophecy from "./ItemCards/Prophecy";
 import Map from "./ItemCards/Map";
 import UniqueMap from "./ItemCards/UniqueMap";
 import Currency from "./ItemCards/Currency";
+import Fragment from "./ItemCards/Fragment";
 import { connect } from "react-redux";
 
 interface DetailsProps {
@@ -26,6 +27,8 @@ function SearchResultDetails(props: DetailsProps) {
       return (<Currency />);
     case "UniqueMap":
       return (<UniqueMap />);
+    case "Fragment":
+      return (<Fragment />);
     default:
       return (<GenericUnique />);
   }
