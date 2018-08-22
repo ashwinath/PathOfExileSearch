@@ -78,13 +78,13 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
         onClick={this.onRowClick.bind(this, id)}
         id={id}
         className="d-flex align-items-center item-container item-hover">
-        <Col className="center" ms="2">
+        <Col className="center" xs="2">
           <CardImg
             style={styles}
             top={true}
             src={imageUrl}/>
         </Col>
-        <Col className="center" ms="3">
+        <Col className="center" xs="2">
           <h6>{name}</h6>
           <h6>{base}</h6>
           {corrupted ?
@@ -93,14 +93,14 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
           }
         </Col>
         <MiscInformation {...this.props.data} />
-        <Col className="center" ms="1">
+        <Col className="center" xs="1">
           {sparklineToUse ? <PriceChart dataPoints={sparklineToUse} /> : null}
         </Col>
-        <Col className="center" ms="2">
+        <Col className="center" xs="2">
           {chaosValue < 1 ? <h6>1 Chaos => {chaosTradeValue}</h6> : <h6>{chaosValue} Chaos</h6>}
           {exaltedValue ? <h6>{exaltedValue} Exalteds</h6> : null}
         </Col>
-        <Col className="center" ms="2">
+        <Col className="center" xs="3">
           <Button
             style={{ marginLeft: "5px", marginRight: "5px"}}
             href={wikiLink}
@@ -130,7 +130,8 @@ function PriceChart(props: PriceChartProps) {
   const dataFormatted = props.dataPoints.map((x, index) => ({ name: index, value: x}));
   /* special magic hardcoded numbers here */
   /* Recalculate this by width */
-  const width = window.innerWidth * 2 / 12 * 7 / 12; 
+  /* Last decimal place is just fine tuning lul */
+  const width = window.innerWidth * 1 / 12 * 7 / 12 * 0.8;
   return (
     <LineChart width={width} height={75} data={dataFormatted}>
       <Line type="monotone" dataKey="value" stroke="#ffffff" />
@@ -151,7 +152,7 @@ function MiscInformation(props: MiscInformationProps) {
       && gemQuality !== undefined
       && gemQuality !== null) {
       return (
-        <Col className="center" ms="2">
+        <Col className="center" xs="2">
           <h6>Level: {gemLevel}</h6>
           <h6>Quality: {gemQuality}</h6>
         </Col>
@@ -160,20 +161,20 @@ function MiscInformation(props: MiscInformationProps) {
   } else if (source === "UniqueArmour" || source === "UniqueWeapon") {
     const linkedText = props.links === 0 ? "0-4 linked" : `${props.links}-linked`;
     return (
-      <Col className="center" ms="2">
+      <Col className="center" xs="2">
         <h6>{linkedText}</h6>
       </Col>
     );
   } else if (source === "DivinationCard") {
     const stackSize = props.stackSize;
     return (
-      <Col className="center" ms="2">
-        <h6>Stack Size: {stackSize}</h6>
+      <Col className="center" xs="2">
+        <h6>Stack: {stackSize}</h6>
       </Col>
     );
   }
   return (
-    <Col className="center" ms="2"/>
+    <Col className="center" xs="2"/>
   );
 }
 

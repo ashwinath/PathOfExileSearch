@@ -7,11 +7,13 @@ import SearchResultDetails from "./SearchResultDetails";
 function SearchItemsResults() {
   return (
     <Row>
-      <Col md="8">
+      <Col md="9">
         <SearchResultList />
       </Col>
-      <Col md="4">
-        <SearchResultDetails />
+      <Col md="3">
+        <div style={{paddingRight: "10px"}}>
+          <SearchResultDetails />
+        </div>
       </Col>
     </Row>
   );
