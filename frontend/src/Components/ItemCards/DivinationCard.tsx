@@ -49,7 +49,7 @@ interface DivinationCardExplictProps {
 
 function DivinationCardExplict(props: DivinationCardExplictProps) {
   const { explicit } = props;
-  if (typeof explicit === "string") {
+  if (typeof explicit === "string" && explicit !== "") {
     const angleBracketsRegex = /\<(.*?)\>/g;
     const itemType = explicit.match(angleBracketsRegex)[0].replace("<", "").replace(">", "");
 
