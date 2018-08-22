@@ -78,6 +78,8 @@ interface SearchResultListItem {
   gemLevel?: number;
   gemQuality?: number;
   stackSize?: number;
+  paySparkline?: number[];
+  sparkline?: number[];
 }
 
 interface MiscInformationProps {

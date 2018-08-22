@@ -1,13 +1,17 @@
 import * as React from "react";
+import { mapSourceToName } from "../Utils/Mappers";
+import { connect } from "react-redux";
+import { Button, Row, Col, CardImg } from "reactstrap";
+import { selectItem } from "../Actions";
+import {
+  LineChart,
+  Line,
+} from "recharts";
 import {
   SearchResultListProps,
   MiscInformationProps,
   SearchResultItemProps,
 } from "../Interfaces";
-import { mapSourceToName } from "../Utils/Mappers";
-import { connect } from "react-redux";
-import { Button, Row, Col, CardImg } from "reactstrap";
-import { selectItem } from "../Actions";
 import "./SearchResultList.css";
 
 function SearchResultList(props: SearchResultListProps) {
@@ -39,6 +43,8 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
       corrupted,
       id,
       links,
+      paySparkline,
+      sparkline,
     } = this.props.data;
     const size = "4vw";
     const base = baseType ? baseType : mapSourceToName(source);
@@ -65,6 +71,8 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
     const linksIncluded = links !== 0 ? `&link_min=${links}&link_max=${links}` : null;
     const poeTradeUrl = `http://poe.trade/search?league=${this.LEAGUE}&name=${name}${linksIncluded}`;
 
+    const sparklineToUse = sparkline ? sparkline : paySparkline;
+
     return (
       <Row
         onClick={this.onRowClick.bind(this, id)}
@@ -85,6 +93,9 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
           }
         </Col>
         <MiscInformation {...this.props.data} />
+        <Col className="center" ms="1">
+          {sparklineToUse ? <PriceChart dataPoints={sparklineToUse} /> : null}
+        </Col>
         <Col className="center" ms="2">
           {chaosValue < 1 ? <h6>1 Chaos => {chaosTradeValue}</h6> : <h6>{chaosValue} Chaos</h6>}
           {exaltedValue ? <h6>{exaltedValue} Exalteds</h6> : null}
@@ -111,6 +122,22 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
   }
 }
 
+interface PriceChartProps {
+  dataPoints: number[];
+}
+
+function PriceChart(props: PriceChartProps) {
+  const dataFormatted = props.dataPoints.map((x, index) => ({ name: index, value: x}));
+  /* special magic hardcoded numbers here */
+  /* Recalculate this by width */
+  const width = window.innerWidth * 2 / 12 * 7 / 12; 
+  return (
+    <LineChart width={width} height={75} data={dataFormatted}>
+      <Line type="monotone" dataKey="value" stroke="#ffffff" />
+    </LineChart>
+  );
+}
+
 const VisibleSearchResultItem = connect()(SearchResultItem);
 
 function MiscInformation(props: MiscInformationProps) {
@@ -124,7 +151,7 @@ function MiscInformation(props: MiscInformationProps) {
       && gemQuality !== undefined
       && gemQuality !== null) {
       return (
-        <Col className="center" ms="3">
+        <Col className="center" ms="2">
           <h6>Level: {gemLevel}</h6>
           <h6>Quality: {gemQuality}</h6>
         </Col>
@@ -133,20 +160,20 @@ function MiscInformation(props: MiscInformationProps) {
   } else if (source === "UniqueArmour" || source === "UniqueWeapon") {
     const linkedText = props.links === 0 ? "0-4 linked" : `${props.links}-linked`;
     return (
-      <Col className="center" ms="3">
+      <Col className="center" ms="2">
         <h6>{linkedText}</h6>
       </Col>
     );
   } else if (source === "DivinationCard") {
     const stackSize = props.stackSize;
     return (
-      <Col className="center" ms="3">
+      <Col className="center" ms="2">
         <h6>Stack Size: {stackSize}</h6>
       </Col>
     );
   }
   return (
-    <Col className="center" ms="3"/>
+    <Col className="center" ms="2"/>
   );
 }
 
@@ -165,7 +192,9 @@ function mapStateToProps(state) {
       corrupted: item.corrupted,
       gemLevel: item.gemLevel,
       gemQuality: item.gemQuality,
-      stackSize: item.stackSize
+      stackSize: item.stackSize,
+      paySparkline: item.paySparkline,
+      sparkline: item.sparkline,
     }
   });
   return {
