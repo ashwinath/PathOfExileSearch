@@ -11,7 +11,7 @@ Sometimes people forget what the name of the item is, but they might remeber cer
 
 ## Examples of this search
 
-* Minus spell damage -> Void battery (Correction to "Reduces spell damage")
+* Minus spell damage -> Void battery (Correction to "Reduced spell damage")
 * Has 0 sockets -> Kaom's Heart (Correction to "Has no sockets")
 * Tary -> Autocompletes to Taryn's Shiver.
 * Shocked enemies explode -> Inpulsa's Broken Heart (Correction to "Shocked Enemies you Kill Explode, dealing (5-10)% of their Maximum Life as Lightning Damage which cannot Shock")
