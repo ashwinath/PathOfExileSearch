@@ -84,7 +84,7 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
             top={true}
             src={imageUrl}/>
         </Col>
-        <Col className="center" xs="2">
+        <Col className="center" xs="3">
           <h6>{name}</h6>
           <h6>{base}</h6>
           {corrupted ?
@@ -97,20 +97,20 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
           {sparklineToUse ? <PriceChart dataPoints={sparklineToUse} /> : null}
         </Col>
         <Col className="center" xs="2">
-          {chaosValue < 1 ? <h6>1 Chaos => {chaosTradeValue}</h6> : <h6>{chaosValue} Chaos</h6>}
-          {exaltedValue ? <h6>{exaltedValue} Exalteds</h6> : null}
+          {chaosValue < 1 ? <h6>1 x <CurrencyIcon type="chaos"/> => {chaosTradeValue}</h6> : <h6>{chaosValue} x <CurrencyIcon type="chaos"/></h6>}
+          {exaltedValue ? <h6>{exaltedValue} x <CurrencyIcon type="exalted"/></h6> : null}
         </Col>
-        <Col className="center" xs="3">
+        <Col className="center" xs="2">
           <Button
             style={{ marginLeft: "5px", marginRight: "5px"}}
             href={wikiLink}
             color="info"
-            target="_blank">Wiki</Button>
+            target="_blank"><i className="fab fa-wikipedia-w"/></Button>
           <Button
             style={{ marginLeft: "5px", marginRight: "5px"}}
             href={poeTradeUrl}
             color="info"
-            target="_blank">Poe.Trade</Button>
+            target="_blank"><i className="fas fa-search"/></Button>
         </Col>
       </Row>
     );
@@ -120,6 +120,33 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
     const { dispatch } = this.props;
     dispatch(selectItem(id));
   }
+}
+
+interface CurrencyIconProps {
+  type: string;
+}
+
+function CurrencyIcon(props: CurrencyIconProps) {
+  const size = "30px";
+  const styles = {
+    paddingRight: "3px",
+    paddingTop: "3px",
+    display: "inline-bloc",
+    maxHeight: size,
+    maxWidth: size,
+    height: size,
+    width: "auto",
+  };
+  const mappings = {
+    "chaos": "https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png?scale=1&w=1&h=1&v=c60aa876dd6bab31174df91b1da1b4f93",
+    "exalted": "https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyAddModToRare.png?scale=1&w=1&h=1&v=1745ebafbd533b6f91bccf588ab5efc53",
+  }
+
+  return (
+    <span>
+      <img style={styles} src={mappings[props.type]}/>
+    </span>
+  )
 }
 
 interface PriceChartProps {
