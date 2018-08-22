@@ -39,4 +39,3 @@ function Map(props: SearchResultDetailsProps) {
 }
 
 export default connect(mapStateToProps)(Map);
-
