@@ -6,7 +6,7 @@ import {
 } from "../Interfaces";
 import { mapSourceToName } from "../Utils/Mappers";
 import { connect } from "react-redux";
-import { Row, Col, CardImg } from "reactstrap";
+import { Button, Row, Col, CardImg } from "reactstrap";
 import { selectItem } from "../Actions";
 import "./SearchResultList.css";
 
@@ -24,10 +24,9 @@ function SearchResultList(props: SearchResultListProps) {
   )
 }
 
+
 class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
-  constructor(props) {
-    super(props);
-  }
+  private LEAGUE = "Incursion";
 
   public render() {
     const {
@@ -59,6 +58,11 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
       };
     }
 
+    const chaosTradeValue = (1/chaosValue).toFixed(2);
+    const nameEscaped = name.replace(/\ /g, "_");
+    const wikiLink = `https://pathofexile.gamepedia.com/${nameEscaped}`;
+    const poeTradeUrl = `http://poe.trade/search?league=${this.LEAGUE}&name=${name}`;
+
     return (
       <Row
         onClick={this.onRowClick.bind(this, id)}
@@ -70,21 +74,30 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
             top={true}
             src={imageUrl}/>
         </Col>
-        <Col className="center" ms="2">
+        <Col className="center" ms="3">
           <h6>{name}</h6>
-        </Col>
-        <Col className="center" ms="2">
           <h6>{base}</h6>
+          {corrupted ?
+            <h6 style={{color: "#d20000"}}>Corrupted</h6>
+            : null
+          }
         </Col>
         <MiscInformation {...this.props.data} />
-        <Col className="center" ms="1">
-          <h6>{corrupted ? "Corrupted": "Not corrupted"}</h6>
-        </Col>
-        <Col className="center" ms="1">
-          <h6>{chaosValue} Chaos</h6>
-        </Col>
-        <Col className="center" ms="1">
+        <Col className="center" ms="2">
+          {chaosValue < 1 ? <h6>1 Chaos => {chaosTradeValue}</h6> : <h6>{chaosValue} Chaos</h6>}
           {exaltedValue ? <h6>{exaltedValue} Exalteds</h6> : null}
+        </Col>
+        <Col className="center" ms="2">
+          <Button
+            style={{ marginLeft: "5px", marginRight: "5px"}}
+            href={wikiLink}
+            color="info"
+            target="_blank">Wiki</Button>
+          <Button
+            style={{ marginLeft: "5px", marginRight: "5px"}}
+            href={poeTradeUrl}
+            color="info"
+            target="_blank">Poe.Trade</Button>
         </Col>
       </Row>
     );

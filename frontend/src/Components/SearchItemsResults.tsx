@@ -7,10 +7,10 @@ import SearchResultDetails from "./SearchResultDetails";
 function SearchItemsResults() {
   return (
     <Row>
-      <Col md="9">
+      <Col md="8">
         <SearchResultList />
       </Col>
-      <Col md="3">
+      <Col md="4">
         <SearchResultDetails />
       </Col>
     </Row>
