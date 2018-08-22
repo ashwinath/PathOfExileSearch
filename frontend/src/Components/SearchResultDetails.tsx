@@ -2,9 +2,10 @@ import * as React from "react";
 import GenericUnique from "./ItemCards/GenericUnique";
 import Essence from "./ItemCards/Essence";
 import DivinationCard from "./ItemCards/DivinationCard";
-import Prophecy from "./ItemCards/Prophecy"
-import Map from "./ItemCards/Map"
-import UniqueMap from "./ItemCards/UniqueMap"
+import Prophecy from "./ItemCards/Prophecy";
+import Map from "./ItemCards/Map";
+import UniqueMap from "./ItemCards/UniqueMap";
+import Currency from "./ItemCards/Currency";
 import { connect } from "react-redux";
 
 interface DetailsProps {
@@ -21,6 +22,8 @@ function SearchResultDetails(props: DetailsProps) {
       return (<Prophecy />);
     case "Map":
       return (<Map />);
+    case "Currency":
+      return (<Currency />);
     case "UniqueMap":
       return (<UniqueMap />);
     default:
