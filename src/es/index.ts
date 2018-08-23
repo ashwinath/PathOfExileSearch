@@ -125,6 +125,13 @@ class ElasticSearchStore {
                 },
                 {
                   match: {
+                    baseType: {
+                      query: searchString
+                    }
+                  }
+                },
+                {
+                  match: {
                     flavourText: searchString
                   }
                 }
