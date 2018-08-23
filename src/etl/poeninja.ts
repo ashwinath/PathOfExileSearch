@@ -81,6 +81,7 @@ class PoeNinjaScraper implements Etl {
   }
 
   public async process() {
+    await elasticSearchStore.sendItemMapping();
     // Else we download
     // Don't hit their server all at once.
     logger.info("Downloading Poe Ninja items.")

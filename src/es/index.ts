@@ -21,11 +21,29 @@ class ElasticSearchStore {
       const mapping = {
         "properties": {
           "name": {
-            "type": "keyword",
-            "boost": 5,
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+              }
+            }
           },
-          "className": { "type": "keyword", },
-          "baseType": { "type": "keyword", },
+          "className": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+              }
+            }
+          },
+          "baseType": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+              }
+            }
+          },
           "implicit": {
             "type": "text",
             "position_increment_gap": 100,
@@ -44,11 +62,25 @@ class ElasticSearchStore {
           "exaltedValue": { "type": "float" },
           "flavourText": { "type": "text" },
           "corrupted": { "type": "boolean" },
-          "gemLevel": { "type": "number" },
+          "gemLevel": { "type": "integer" },
           "gemQuality": { "type": "integer" },
-          "itemType": { "type": "keyword" },
+          "itemType": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+              }
+            }
+          },
           "links": { "type": "integer" },
-          "source": { "type": "keyword" },
+          "source": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+              }
+            }
+          },
         }
       }
       await this.es.indices.putMapping({
