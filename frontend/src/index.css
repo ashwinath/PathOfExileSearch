@@ -17,6 +17,5 @@ body {
   background: #1C1F24;
   color: #E5DFC5;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
