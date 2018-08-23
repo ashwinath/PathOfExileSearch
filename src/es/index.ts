@@ -103,6 +103,20 @@ class ElasticSearchStore {
                   }
                 },
                 {
+                  match_phrase: {
+                    implicit: {
+                      query: searchString,
+                    }
+                  }
+                },
+                {
+                  match_phrase: {
+                    explicit: {
+                      query: searchString,
+                    }
+                  }
+                },
+                {
                   match: {
                     implicit: {
                       query: searchString,
