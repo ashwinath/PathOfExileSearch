@@ -20,8 +20,6 @@ class PoeNinjaScraper implements Etl {
     { itemType: "Essence", hasCurrencyDetails: false },
     { itemType: "DivinationCard", hasCurrencyDetails: false },
     { itemType: "Prophecy", hasCurrencyDetails: false },
-    { itemType: "SkillGem", hasCurrencyDetails: false },
-    { itemType: "HelmetEnchant", hasCurrencyDetails: false },
     { itemType: "UniqueMap", hasCurrencyDetails: false },
     { itemType: "Map", hasCurrencyDetails: false },
     { itemType: "UniqueJewel", hasCurrencyDetails: false },

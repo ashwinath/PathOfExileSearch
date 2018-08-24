@@ -9,6 +9,7 @@
     "@types/elasticsearch": "^5.0.25",
     "@types/restify": "^7.2.3",
     "@types/uuid": "^3.4.3",
+    "concurrently": "^3.6.1",
     "nodemon": "^1.18.3",
     "typescript": "^3.0.1"
   },
@@ -26,6 +27,7 @@
     "init-elasticsearch": "docker run -d -p 9200:9200 -p 9300:9300 -e \"discovery.type=single-node\" docker.elastic.co/elasticsearch/elasticsearch:6.3.2",
     "build-prod": "rm -rf build && ./node_modules/typescript/bin/tsc",
     "run-prod": "NODE_ENV=production node build/index.js | ./node_modules/bunyan/bin/bunyan",
-    "test": "echo 'no tests for this sorry.'"
+    "test": "echo 'no tests for this sorry.'",
+    "start-dev-mode": "concurrently 'yarn watch' 'node build/'"
   }
 }
