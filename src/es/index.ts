@@ -106,7 +106,12 @@ class ElasticSearchStore {
     }
   }
 
-  public async search(index: string, searchString: string, itemCount: number): Promise<EsSearchResult> {
+  public async search(
+    index: string,
+    searchString: string,
+    links: number[],
+    itemCount: number
+  ): Promise<EsSearchResult> {
     try {
       const response = await this.es.search<PoeNinjaItem>({
         index,
@@ -123,6 +128,13 @@ class ElasticSearchStore {
           ],
           query: {
             bool: {
+              filter: [
+                {
+                  terms: {
+                    links,
+                  }
+                }
+              ],
               should: [
                 {
                   match_phrase_prefix: {

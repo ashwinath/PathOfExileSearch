@@ -22,12 +22,14 @@ function receiveResults(poeItems: PoeNinjaItem[]) {
   };
 }
 
-function searchServer(searchKey: string, dispatch: Dispatch) {
+function searchServer(searchKey: string, links: number[], dispatch: Dispatch) {
   try {
+    const linksCsv = links.join(",");
     axios.get<SearchItemResult>("/-/items/search", {
       params: {
         search: searchKey,
         itemLimit: 10,
+        links: linksCsv,
       }
     }).then(response => {
       dispatch(receiveResults(response.data.data));
@@ -51,4 +53,11 @@ function selectItem(id: string) {
   };
 }
 
-export { search, searchServer, init, selectItem };
+function selectLinksRadioButton(id: string) {
+  return {
+    type: "SELECT_LINKS_RADIO",
+    buttonId: id,
+  }
+}
+
+export { search, searchServer, init, selectItem, selectLinksRadioButton };

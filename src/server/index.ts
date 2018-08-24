@@ -24,8 +24,18 @@ async function searchHandler(
   const requestObj = request.query;
   const searchString = requestObj["search"] || "";
   const itemLimit = requestObj["itemLimit"] || 15;
+  const linksCsv = requestObj["links"] || "0,1,2,3,4,5,6";
+  const links = linksCsv.split(",")
+  if (searchString === "") {
+    const searchResponse: SearchResponse = {
+      success: true,
+      data: [],
+    }
+    response.send(200, searchResponse);
+    return next();
+  }
 
-  const searchResult = await elasticSearchStore.search("items", searchString, itemLimit);
+  const searchResult = await elasticSearchStore.search("items", searchString, links, itemLimit);
 
   const searchResponse: SearchResponse = {
     success: searchResult.success,

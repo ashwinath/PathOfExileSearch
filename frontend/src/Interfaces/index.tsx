@@ -8,6 +8,7 @@ interface SearchItemResult {
 interface SearchFormProps {
   dispatch: Dispatch;
   searchKey: string;
+  activeLinksButton: string;
 }
 
 interface SearchItemsResultsProps {

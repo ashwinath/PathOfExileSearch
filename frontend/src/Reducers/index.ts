@@ -10,6 +10,7 @@ interface SearchState {
 const defaultState = {
   search: "",
   poeItems: [],
+  activeLinksButton: "allLinksButtonStatus",
 }
 
 function search(state: SearchState = defaultState, action) {
@@ -30,6 +31,12 @@ function search(state: SearchState = defaultState, action) {
       return {
         ...state,
         clickedItem: clicked.length > 0 ? clicked[0] : undefined,
+      }
+    case "SELECT_LINKS_RADIO":
+      const { buttonId } = action;
+      return {
+        ...state,
+        activeLinksButton: buttonId,
       }
     default:
       return state;
