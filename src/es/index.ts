@@ -143,7 +143,10 @@ class ElasticSearchStore {
                 },
                 {
                   match: {
-                    name: searchString,
+                    name: {
+                      query: searchString,
+                      fuzziness: 2,
+                    }
                   }
                 },
                 {
@@ -164,6 +167,7 @@ class ElasticSearchStore {
                   match: {
                     implicit: {
                       query: searchString,
+                      fuzziness: 2,
                     }
                   }
                 },
@@ -171,26 +175,32 @@ class ElasticSearchStore {
                   match: {
                     explicit: {
                       query: searchString,
+                      fuzziness: 2,
                     }
                   }
                 },
                 {
                   match: {
                     itemType: {
-                      query: searchString
+                      query: searchString,
+                      fuzziness: 2,
                     }
                   }
                 },
                 {
                   match: {
                     baseType: {
-                      query: searchString
+                      query: searchString,
+                      fuzziness: 2,
                     }
                   }
                 },
                 {
                   match: {
-                    flavourText: searchString
+                    flavourText: {
+                      query: searchString,
+                      fuzziness: 2,
+                    }
                   }
                 }
               ]
