@@ -169,7 +169,7 @@ class ElasticSearchStore {
                     implicit: {
                       query: searchString,
                       fuzziness: 2,
-                      prefix_length: 5,
+                      prefix_length: 3,
                     }
                   }
                 },
@@ -178,7 +178,7 @@ class ElasticSearchStore {
                     explicit: {
                       query: searchString,
                       fuzziness: 2,
-                      prefix_length: 5,
+                      prefix_length: 3,
                     }
                   }
                 },
@@ -187,7 +187,7 @@ class ElasticSearchStore {
                     itemType: {
                       query: searchString,
                       fuzziness: 2,
-                      prefix_length: 5,
+                      prefix_length: 3,
                     }
                   }
                 },
@@ -196,7 +196,7 @@ class ElasticSearchStore {
                     baseType: {
                       query: searchString,
                       fuzziness: 2,
-                      prefix_length: 5,
+                      prefix_length: 3,
                     }
                   }
                 },
@@ -205,7 +205,7 @@ class ElasticSearchStore {
                     flavourText: {
                       query: searchString,
                       fuzziness: 2,
-                      prefix_length: 5,
+                      prefix_length: 3,
                     }
                   }
                 }
