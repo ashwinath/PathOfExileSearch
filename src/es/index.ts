@@ -14,9 +14,13 @@ class ElasticSearchStore {
 
   public async sendItemMapping() {
     try {
-      await this.es.indices.create({
-        index: "items",
-      });
+      try {
+        await this.es.indices.create({
+          index: "items",
+        });
+      } catch (e) {
+        // ignore if it's there
+      }
 
       const mapping = {
         "properties": {
@@ -81,6 +85,11 @@ class ElasticSearchStore {
               }
             }
           },
+          "meta": {
+            "properties": {
+              "mapTierString": { "type": "text" },
+            }
+          }
         }
       }
       await this.es.indices.putMapping({
@@ -206,6 +215,14 @@ class ElasticSearchStore {
                       query: searchString,
                       fuzziness: 2,
                       prefix_length: 3,
+                    }
+                  }
+                },
+                {
+                  match: {
+                    "meta.mapTierString": {
+                      query: searchString,
+                      boost: 5,
                     }
                   }
                 }

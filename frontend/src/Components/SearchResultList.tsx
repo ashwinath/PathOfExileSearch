@@ -86,7 +86,7 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
         </Col>
         <Col className="center" xs="3">
           <h6>{name}</h6>
-          <h6>{base}</h6>
+          <h6>{source === "Map" ? "" : base}</h6>
           {corrupted ?
             <h6 style={{color: "#d20000"}}>Corrupted</h6>
             : null

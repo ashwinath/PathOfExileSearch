@@ -146,6 +146,11 @@ interface PoeNinjaItem extends EsItem {
   exaltedValue?: number;
   links?: number;
   artFilename?: string;
+  meta?: PoeNinjaMeta;
+}
+
+interface PoeNinjaMeta {
+  mapTierString: string | null;
 }
 
 interface Etl {

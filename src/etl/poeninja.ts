@@ -184,7 +184,10 @@ class PoeNinjaScraper implements Etl {
           itemType: line.itemType,
           links: line.links,
           artFilename: line.artFilename,
-        }
+          meta: {
+            mapTierString: this.generateMetaMapTier(source, line.mapTier)
+          }
+        };
 
         await elasticSearchStore.store("items", poeNinjaItem);
       }
@@ -213,6 +216,14 @@ class PoeNinjaScraper implements Etl {
 
   private generateTodaysDate() {
     return moment().format("YYYY-MM-DD");
+  }
+
+  private generateMetaMapTier(source: string, tier: number): string | null {
+    if (!tier || source !== "Map") {
+      return null;
+    }
+
+    return `Tier ${tier} map`;
   }
 }
 
