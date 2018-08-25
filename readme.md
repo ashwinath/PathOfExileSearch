@@ -32,6 +32,12 @@ Thanks [exljbris Font Foundry](https://www.exljbris.com/fontin.html) for the fon
 
 Thanks [PoeNinja](http://poe.ninja) for the API.
 
+## Todos
+
+Map search: By boss name, By tiers, Pantheon mappings
+Item Search: By low/mid/high/endgame
+Name weirdness: Mjolnir has that weird 'o'.
+
 ## License
 
 The MIT License (MIT)
