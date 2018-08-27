@@ -105,12 +105,14 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
             style={{ marginLeft: "5px", marginRight: "5px"}}
             href={wikiLink}
             color="info"
-            target="_blank"><i className="fab fa-wikipedia-w"/></Button>
+            target="_blank"
+            rel="noopener noreferrer"><i className="fab fa-wikipedia-w"/></Button>
           <Button
             style={{ marginLeft: "5px", marginRight: "5px"}}
             href={poeTradeUrl}
             color="info"
-            target="_blank"><i className="fas fa-search"/></Button>
+            target="_blank"
+            rel="noopener noreferrer"><i className="fas fa-search"/></Button>
         </Col>
       </Row>
     );
