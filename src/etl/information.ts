@@ -47,7 +47,7 @@ const CURRENCY_STACK_SIZE = {
   "Chromatic Orb": 20,
 }
 
-const LEAGUE = "Incursion";
+const LEAGUE = "Delve";
 
 export {
     LEAGUE,
