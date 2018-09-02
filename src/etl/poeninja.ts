@@ -205,7 +205,7 @@ class PoeNinjaScraper implements Etl {
         delete imageQueryString[key];
       }
     }
-    return url.replace("http", "https") + querystring.stringify(imageQueryString);
+    return url + querystring.stringify(imageQueryString);
   }
 
   private generateUrl(itemType: string, currency: boolean) {
