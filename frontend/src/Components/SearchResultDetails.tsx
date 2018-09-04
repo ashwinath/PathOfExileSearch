@@ -8,6 +8,7 @@ import UniqueMap from "./ItemCards/UniqueMap";
 import Currency from "./ItemCards/Currency";
 import Fragment from "./ItemCards/Fragment";
 import SkillGem from "./ItemCards/SkillGem";
+import DelveItem from "./ItemCards/DelveItem";
 import { connect } from "react-redux";
 
 interface DetailsProps {
@@ -30,6 +31,10 @@ function SearchResultDetails(props: DetailsProps) {
       return (<UniqueMap />);
     case "Fragment":
       return (<Fragment />);
+    case "Resonator":
+      /* Fall Through */
+    case "Fossil":
+      return (<DelveItem />)
     case "SkillGem":
       /* Fall Through */
     case "HelmetEnchant":

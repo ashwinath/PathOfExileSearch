@@ -16,6 +16,8 @@ class PoeNinjaScraper implements Etl {
   private MAPPINGS = [
     { itemType: "Fragment", hasCurrencyDetails: true },
     { itemType: "Currency", hasCurrencyDetails: true },
+    { itemType: "Fossil", hasCurrencyDetails: false },
+    { itemType: "Resonator", hasCurrencyDetails: false },
     { itemType: "Essence", hasCurrencyDetails: false },
     { itemType: "DivinationCard", hasCurrencyDetails: false },
     { itemType: "Prophecy", hasCurrencyDetails: false },
