@@ -13,9 +13,10 @@ function DelveItem(props: SearchResultDetailsProps) {
       <div className="essence-title-header">
         <p className="essence-header-text default-margin-bottom">{item.name}</p>
       </div>
-      <hr className="essence-line-break-item hr-margin"/>
-      {item.explicit.map((line) =>
-        <p className="item-mod-text mod-text default-margin-bottom" key={item.id + line}>{line}</p>)}
+      <div className="default-margin-top">
+          {item.explicit.map((line) =>
+            <p className="item-mod-text mod-text default-margin-bottom" key={item.id + line}>{line}</p>)}
+      </div>
       <hr className="essence-line-break-item hr-margin"/>
       <CardImg
         style={{
