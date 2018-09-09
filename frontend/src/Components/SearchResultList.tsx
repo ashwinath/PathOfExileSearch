@@ -30,7 +30,7 @@ function SearchResultList(props: SearchResultListProps) {
 
 
 class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
-  private LEAGUE = "Incursion";
+  private LEAGUE = "Delve";
 
   public render() {
     const {
