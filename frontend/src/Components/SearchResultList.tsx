@@ -3,6 +3,7 @@ import { mapSourceToName } from "../Utils/Mappers";
 import { connect } from "react-redux";
 import { Button, Row, Col, CardImg } from "reactstrap";
 import { selectItem } from "../Actions";
+import { mapToQueryString } from "../Utils/UrlMappers";
 import {
   LineChart,
   Line,
@@ -69,7 +70,15 @@ class SearchResultItem extends React.Component<SearchResultItemProps, {}> {
     const nameEscaped = name.replace(/\ /g, "_");
     const wikiLink = `https://pathofexile.gamepedia.com/${nameEscaped}`;
     const linksIncluded = links !== 0 ? `&link_min=${links}&link_max=${links}` : "";
-    const poeTradeUrl = `http://poe.trade/search?league=${this.LEAGUE}&name=${name}${linksIncluded}`;
+
+    const poeTradeParams = {
+      league: this.LEAGUE,
+      name: `${name}${linksIncluded}`,
+      capquality: "x",
+      has_buyout: 1,
+      online: "x",
+    }
+    const poeTradeUrl = `http://poe.trade/search?${mapToQueryString(poeTradeParams)}`;
 
     const sparklineToUse = sparkline ? sparkline : paySparkline;
 
