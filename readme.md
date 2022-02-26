@@ -5,6 +5,9 @@
 
 Search for keywords throughout the item database. Anything you wanna search for. Name it and ye shall receive. It should also be able to search fast. Local development takes about 5ms ish per character typed. On my resourced starved cloud server (1 core 2gb ram, a lot of it going into elasticsearch) it takes about 20ms which is still not bad!
 
+## Demo
+![](assets/PoeSearch.gif)
+
 ## Motivations
 
 Sometimes people forget what the name of the item is, but they might remeber certain properties of the item. Be it flavour text like "A merchant seeks to trade misfitting gifts. Five for one, but what is the one?". Pretty catchy eh? But not many people remember the prophecy that gives that. Type that in the search bar and the server is smart enough to know what you are looing for! Of course you dont need to type the full thing; Bits and pieces of it should be sufficient for the search to function.
